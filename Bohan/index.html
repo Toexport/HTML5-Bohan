@@ -38,26 +38,12 @@
 <!--form-stars-here-->
 		<div class="form-w3-agile">
 			<h2 class="sub-agileits-w3layouts">登录</h2>
-			<form action="http://www.bohanserver.top:8088/webservice.asmx/Login" method="post">
-					<!-- <input type="email" name="Eamil" placeholder="用户" required="" /> -->
-					<input type="text" name="username" placeholder="用户" required="" />
-					<input type="password" name="Password" placeholder="密码" required="" />
-					<a href="#" class="forgot-w3layouts"><a href="ForgotPassword.html">忘记密码 ?</a>
-				    <div class="submit-w3l">
-				    	<!--<script>
-					function LoginPass() {
-						if("uesrname" == "" || "Password" == "") {
-							alert("账号或密码为空");
-						}else {
-							alert("登录成功");
-						}
-					}
-				</script>-->
-					<input type="submit" onclick="LoginPass()" value="登录"><a href="http://www.baidu.com"></a>
-					<!--http://www.bohanserver.top:8088/webservice.asmx?op=Login-->
-				</div>
-				<p class="p-bottom-w3ls"><a href="signup.html">点击注册</a>如果你没有一个帐户</p>
-			</form>
+			<p id="demo">A Paragraph.</p>
+			<input type="text" name="username" id="username" placeholder="用户" required="" />
+			<input type="password" name="password" id="password" placeholder="密码" required="" />
+			<a href="#" class="forgot-w3layouts"><a href="ForgotPassword.html">忘记密码 ?</a>
+			    <div class="submit-w3l">
+					<input type="submit" onclick="myFunction()" value="登录"><a href="http://www.baidu.com"></a>
 		</div>
 		</div>
 <!--//form-ends-here-->
@@ -66,7 +52,8 @@
 		<p> © 2019 Smart power management system BH <a href="http://www.bohan-smartec.com/" target="_blank">了解更多...</a></p>
 	</div>
 	<!-- //copyright --> 
-	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<!-- <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script> -->
+	<script type="text/javascript" src="js/Login.js"></script>
 
 </body>
 </html>
