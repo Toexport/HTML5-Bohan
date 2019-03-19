@@ -82,13 +82,14 @@ ul {
 	color: #EEEEEE;
 	float: right;
 }
+
  #header .sidebox {
  	height: 49px;
- 	border: 1px solid #2E2D3C;
+ 	border: 1px solid#EEEEEE;
  }
  #section .sidebox {
  	height: 49px;
- 	border: 1px solid #2E2D3C;
+ 	border: 1px solid#EEEEEE;
  }
 
  #section >section >ul {
