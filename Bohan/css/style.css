@@ -124,7 +124,7 @@ form {
  .form-w3-agile input[type="text"], .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
     outline: none;
     font-size: 15px;
-    color: #ffffff;
+    color: #FFFFFF;
     text-align: left;
     padding: 12px 14px;
     width: 95.5%;
@@ -136,6 +136,35 @@ form {
     font-family: 'Open Sans', sans-serif;
     letter-spacing: 1px;
 }
+.main-agileits> div >form >button[type = "butt"] {
+	outline: none;
+    font-size: 10px;
+    background: #fff;
+    color: #000;
+    padding: 12px 14px;
+    width: 90px;
+    height: 35px;
+    border: none;
+    float: right; 
+    
+}
+.main-agileits >div >form >input[type = "VerCode"] {
+	outline: none;
+    font-size: 15px;
+    color: #FFFFFF;
+    text-align: left;
+    float: left;
+    padding: 12px 14px;
+    width: 70%;
+    border: none;
+    border-bottom: 1px solid #889ba0;
+    -webkit-appearance: none;
+    margin-bottom: 30px;
+    background: transparent;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 1px;
+}
+
 
 a.forgot-w3layouts {
     display: block;
@@ -167,7 +196,7 @@ a.forgot-w3layouts {
     -o-transition: 0.3s all;
     -ms-transition: 0.3s all;
 }
-.submit-w3l input[type="submit"]:hover{
+.submit-w3l input[type="submit"]:hover,.main-agileits> div >form >button[type = "butt"]:hover{
     background: #df5799;
 	color:#ffffff;
 	transition: 0.3s all;
@@ -176,6 +205,7 @@ a.forgot-w3layouts {
     -o-transition: 0.3s all;
     -ms-transition: 0.3s all;
 }
+
 .p-bottom-w3ls {
     font-size: 14px;
     color: #eee;
@@ -192,7 +222,7 @@ a.forgot-w3layouts {
 	font-weight: 600;
 	font-family: 'Open Sans', sans-serif;
 }
-/*--main-content-ends-here--*/
+/*--main-content-ends-here--
 /*--register-form--*/
 .contact-w3-agileits h3 {
     color: #fff;
