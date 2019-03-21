@@ -50,20 +50,20 @@ button {
 	height: 50px;
 	margin:0 auto;
 }
- #section >section {
+ #section >div {
  	width: 100%;
  	height: 45px;
  	background-color: white;
  }
  
-#section >section >div >ul {
+/*#section >section >div >ul {
 	width: 1263px;
 	height: 50px;
 	margin:0 auto;
 	background-color: red;
-}
+}*/
  
- #section .sidebox {
+ #section>div .sidebox {
  	height: 49px;
  	/*margin:5px 5px;*/
  	border: 1px solid#EEEEEE;
@@ -93,20 +93,20 @@ button {
 	float: right;
 }
 
- #section >section >ul {
+ #section >div>section >ul {
  	width: 1263px;
 	height: 50px;
 	line-height: 50px;
 	color: #EEEEEE;
 	float: right;
  }
- #section >div >ul {
+ /*#section >div >ul {
  	width: 1263px;
 	height: 50px;
 	line-height: 50px;
 	color: #EEEEEE;
 	float: right;
- }
+ }*/
 
 #nav >section >ul >li {
 	width: 120px;
@@ -122,11 +122,13 @@ button {
 	font-size: 20px; //字体大小
 	float: left;
 }
-#section >section >ul >li {
+#section >div>section >ul >li {
 	/*width: 97px;*/
-	width: 50%;
+	width: 45%;
 	text-align: center;
 	float: left;	
+	margin: 0 auto;
+	/*text-indent: +20px;*/
 }
 
 
@@ -142,12 +144,11 @@ button {
 	display: block;
 	
 }
-#section >section >ul >li >a {
+#section >div>section >ul >li >a {
 	color: #000000;
 	display: block;
 	
 }
-
 
 
 #nav >section >ul >li >a:hover {
