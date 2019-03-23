@@ -1,33 +1,77 @@
 @charset "utf-8";
+/*此处是贴边*/
+/*body,h1,ul {
+	margin: 0;
+	padding: 0;
+}*/
+
+/*去掉文字前面的点*/
+ul {
+	list-style: outside none none;
+}
+/*输入框大小长度*/
+input[type = "text"] {
+	width: 85px;
+	height: 22px;
+}
+/*按钮大小，文字大小*/
+button {
+	width: 55px;
+	height: 30px;
+	background-color:#1E9FFF;
+	color: white;
+}
 
 #section {
-	min-width: 50%px;
- 	/*width: 50%;*/
- 	height: 150px; 
- 	/*background-color: #1E9FFF;*/
- 	/*border: 1px solid red;*/
- 	/*float: left;*/	
-	margin: 0 auto;
+	min-width: 50%;
+ 	height: 251px; 
+ 	/*background-color: yellow;*/
  	
+	margin: 0 auto;
+}
+
+#section .sidebox {
+	width: 50%;
+	/*text-align:center;*/
+	color: #000000;
+ 	float: right;	
+	margin: 0 auto;// 居中
+}
+#section .sidebox {
+	width: 50%;
+	color: #000000;
+	/*text-align:center;*/
+ 	float: left;	
+	margin: 0 auto;// 居中
+}
+/*设置文字颜色*/
+#section .sideboxS {
+	color: #1E9FFF;
+	display: block;
+}
+#section>ul {
+ 	width: 50%;
+	height: 49.5px;
+	text-align: center;
+	color: #000000;
+ 	float: left;	
+	margin: 0 auto;// 居中
+}
+
+#section >div>ul {
+	width: 50%;
+	height: 150px;
+	text-align: center;
+	color: #000000;
+ 	float: left;	
+	margin: 0 auto;// 居中
 }
 
 #section>ul {
-	/*min-width: 1263px;*/
- 	width: 50%;
-	height: 50px;
-	text-align: center;
-	color: #EEEEEE;
- 	background-color: #1E9FFF;
- 	float: left;	
-	margin: 0 auto;// 居中
-	/*background-color: #1E9FFF;*/
+	border: 0.5px solid gainsboro;
 }
-#section>ul {
-	/*width: 100%;
-	height: 50px;
-	line-height: 50px;
-	color: #EEEEEE;
-	background-color: #1E9FFF;*/
-	border: 1px solid red;
+#section>div>ul {
+	border: 0.5px solid gainsboro;
 }
+
  
