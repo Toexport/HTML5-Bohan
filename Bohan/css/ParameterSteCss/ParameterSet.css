@@ -109,17 +109,15 @@ button {
 }
 
 #section {
-	min-width: 50%;
-	/*位置居中写在这里*/
+	min-width: 100%;
+	/*min-width: 1236px; //测试*/
  	height: 251px; 
  	/*background-color: yellow;*/
- 	position: relative;
 	margin: 0 auto;
 }
 
 #section .sidebox {
 	width: 50%;
-	text-align:center;
 	color: #000000;
  	float: right;	
 	margin: 0 auto;// 居中
@@ -137,6 +135,7 @@ button {
 }
 #section>ul {
  	width: 50%;
+ 	/*width: 1121px;// 测试*/
 	height: 49.5px;
 	text-align: center;
 	color: #000000;
@@ -146,6 +145,7 @@ button {
 
 #section >div>ul {
 	width: 50%;
+	/*width: 1121px;// 测试*/
 	height: 150px;
 	text-align: center;
 	color: #000000;
@@ -159,5 +159,3 @@ button {
 #section>div>ul {
 	border: 0.5px solid gainsboro;
 }
-
- 
