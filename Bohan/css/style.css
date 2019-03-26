@@ -136,14 +136,15 @@ form {
     font-family: 'Open Sans', sans-serif;
     letter-spacing: 1px;
 }
-.main-agileits> div >form >button[type = "butt"] {
+/*验证码按钮*/
+.main-agileits> div >form >input[type = "butt"] {
 	outline: none;
     font-size: 10px;
     background: #fff;
     color: #000;
     padding: 12px 14px;
-    width: 90px;
-    height: 35px;
+    width: 95px;
+    height: 20px;
     border: none;
     float: right; 
     

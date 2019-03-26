@@ -42,7 +42,7 @@
 			<form action="#" method="post">
 				    <input type="text" name="mobileNum" placeholder="请输入手机号" required="" />
 				    <input type="VerCode" class="VerCode"  placeholder="验证码" required="" />
-					<button type="butt">点击按钮</button>
+					<input onclick="sendmessage(this,60);" type="button" value="发送短信" class="btn btn-danger"/>
 					<input type="password" name="Password" placeholder="密码" required="" />
 					<input type="password" name="Password" placeholder="确认密码" required="" />
 				<div class="submit-w3l">
@@ -59,6 +59,7 @@
 	</div>
 	<!-- //copyright --> 
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<!--<script type="text/javascript" src="../../js/VerificationCode/VerificationCode.js"></script>-->
 	<script type="text/javascript" src="../../js/Registered/Registered.js"></script>
 
 </body>
