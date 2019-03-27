@@ -113,63 +113,66 @@
 function LoginFunction(){
     var name = document.getElementById("username").value;
     var pwd = document.getElementById("password").value;
-	  alert("name");
+//	  alert("name");
     if(name == null || name == "" || name == undefined){
 //      showMsg("请输入用户名");
         alert("用户名不能为空！");
-        form.username.focus ();
-        console.log("name");
-        return false;
-    }else  if(pwd == null || pwd == "" || pwd == undefined){
-        showMsg("请输入密码");
-        form.password.focus ();
+        form.name.focus ();
+//      console.log("name");
         return false;
     }
-这里为用ajax获取用户信息并进行验证，如果账户密码不匹配则登录失败，如不需要验证用户信息，这段可不写
-   $.ajax({
-//      url : systemURL,// 获取自己系统后台用户信息接口
-        url: "http://www.bohanserver.top:8088/webservice.asmx/Login"
-        data :{"password":pass,"username":user},
-        type : "GET",
-        dataType: "json",
-        success : function(data) {
-            if (data){
-                if (data.code == "1111") { //判断返回值，这里根据的业务内容可做调整
-                        setTimeout(function () {//做延时以便显示登录状态值
-                           showMsg("正在登录中...");
-                           console.log(data);
-//                         window.location.href =  url;//指向登录的页面地址
-                          window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login";
-                       },100)
-                    } else {
-                        showMsg(data.message);//显示登录失败的原因
-                        return false;
-                    }
-                }
-            },
-            error : function(data){
-                showMsg(data.message);
-            }
-    });
-}
-
-//错误信息提醒
-function showMsg(msg){
-    $("#CheckMsg").text(msg);
-}
-
-//监听回车键提交
-$(function(){
-    document.onkeydown=keyDownSearch;
-    function keyDownSearch(e) {
-        // 兼容FF和IE和Opera
-        var theEvent = e || window.event;
-        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
-        if (code == 13) {
-            $('#submit').click();//具体处理函数
-            return false;
-        }
-        return true;
+    if(pwd == null || pwd == "" || pwd == undefined){
+//      showMsg("请输入密码");
+        alert("请输入密码");
+        form.pwd.focus ();
+        return false;
     }
-});
+   }
 
+////这里为用ajax获取用户信息并进行验证，如果账户密码不匹配则登录失败，如不需要验证用户信息，这段可不写
+// $.ajax({
+////      url : systemURL,// 获取自己系统后台用户信息接口
+//      url: "http://www.bohanserver.top:8088/webservice.asmx/Login"
+//      data :{"password":pwd,"username":name},
+//      type : "GET",
+//      dataType: "json",
+//      success : function(data) {
+//          if (data){
+//              if (data.code == "1111") { //判断返回值，这里根据的业务内容可做调整
+//                      setTimeout(function () {//做延时以便显示登录状态值
+//                         showMsg("正在登录中...");
+//                         console.log(data);
+////                         window.location.href =  url;//指向登录的页面地址
+//                        window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login";
+//                     },100)
+//                  } else {
+//                      showMsg(data.message);//显示登录失败的原因
+//                      return false;
+//                  }
+//              }
+//          },
+//          error : function(data){
+//              showMsg(data.message);
+//          }
+//  });
+//}
+////错误信息提醒
+//function showMsg(msg){
+//  $("#CheckMsg").text(msg);
+//}
+//
+////监听回车键提交
+//$(function(){
+//  document.onkeydown=keyDownSearch;
+//  function keyDownSearch(e) {
+//      // 兼容FF和IE和Opera
+//      var theEvent = e || window.event;
+//      var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+//      if (code == 13) {
+//          $('#submit').LoginFunction();//具体处理函数
+//          return false;
+//      }
+//      return true;
+//  }
+//});
+//
