@@ -102,17 +102,25 @@
 //	}
 //}
 
+//function LoginFunction() {
+//	var name = document.getElementById("username").value;
+//	var pwd = document.getElementById("password").value;
+//	if (name == "");
+//}
+
 
 //验证表单是否为空，若为空则将焦点聚焦在input表单上，否则表单通过，登录成功
 function LoginFunction(){
-    var username = $("#username"),$password = $("#password");
-    var username = $username.val(),password = $password.val();
-    if(!username || username == ""){
-        showMsg("请输入用户名");
+    var name = document.getElementById("username").value;
+    var pwd = document.getElementById("password").value;
+	  alert("name");
+    if(name == null || name == "" || name == undefined){
+//      showMsg("请输入用户名");
+        alert("用户名不能为空！");
         form.username.focus ();
+        console.log("name");
         return false;
-    }
-    if(!password || password == ""){
+    }else  if(pwd == null || pwd == "" || pwd == undefined){
         showMsg("请输入密码");
         form.password.focus ();
         return false;
@@ -121,7 +129,7 @@ function LoginFunction(){
    $.ajax({
 //      url : systemURL,// 获取自己系统后台用户信息接口
         url: "http://www.bohanserver.top:8088/webservice.asmx/Login"
-        data :{"password":password,"username":username},
+        data :{"password":pass,"username":user},
         type : "GET",
         dataType: "json",
         success : function(data) {
