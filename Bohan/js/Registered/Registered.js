@@ -2,8 +2,11 @@
 
 
 
-
-
+//验证输入的电话号码是否是11位数字
+//if(!phoneReg.test($('[name=mobileNum]').val())){
+//$('[name=mobileNum]').after(errMsg('请输入正确的手机号码！'));
+//　　　　return false；
+//}
 //获取验证码
 function sendmessage(obj,second){
 		if(sendmessage){

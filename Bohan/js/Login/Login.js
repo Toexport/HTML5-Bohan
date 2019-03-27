@@ -1,21 +1,21 @@
-function myFunction() {
-	// document.getElementById("demo").innerHTML="My First External JavaScript";
-	var name = document.getElementById("username").value;
-	var pwd = document.getElementById("password").value;
-	if (name == "") {
-		alert("用户名不能为空！");
-	} else if (pwd == "") {
-		alert("密码不能为空！");
-	} else if (pwd != "" && pwd.length < 6) {
-		alert("密码不能小于6位！");
-	} else if (name != "" && pwd != "" && pwd.length >= 6) {
-//		 		if(name == "15118041624" && pwd == "123456789"){
-		 			alert("登录成功！");
-		 			window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login";
+//function LoginFunction() {
+//	// document.getElementById("demo").innerHTML="My First External JavaScript";
+//	var name = document.getElementById("username").value;
+//	var pwd = document.getElementById("password").value;
+//	if (name == "") {
+//		alert("用户名不能为空！");
+//	} else if (pwd == "") {
+//		alert("密码不能为空！");
+//	} else if (pwd != "" && pwd.length < 6) {
+//		alert("密码不能小于6位！");
+//	} else if (name != "" && pwd != "" && pwd.length >= 6) {
+////		 		if(name == "15118041624" && pwd == "123456789"){
+//		 			alert("登录成功！");
+//		 			window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login";
 //		 		}
-		// 		else{
-		// 			alert("用户名或密码错误！");
-		// 			window.location.href = "index.html";
+//		 		else{
+//		 			alert("用户名或密码错误！");
+//		 			window.location.href = "index.html";
 //		 		}
 
 		/*var user = $("input[type='radio']:checked").val();
@@ -30,16 +30,16 @@ function myFunction() {
 			type = 2;
 		}*/
 
-		var data = {
-			"username": name,
-			"password": pwd
-		};
-		document.getElementById("demo").innerHTML = "正在请求...";
-
-		var httpRequest = new XMLHttpRequest(); //第一步：创建需要的对象
-		httpRequest.open('POST', "http://1.youzhanmall.com/?mod=index&code=gyl_app_yzorder", true); //第二步：打开连接/***发送json格式文件必须设置请求头 ；如下 - */
-		httpRequest.setRequestHeader("Content-type", "application/json"); //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）var obj = { name: 'zhansgan', age: 18 };
-		httpRequest.send(JSON.stringify(data)); //发送请求 将json写入send中
+//		var data = {
+//			"username": name,
+//			"password": pwd
+//		};
+//		document.getElementById("demo").innerHTML = "正在请求...";
+//
+//		var httpRequest = new XMLHttpRequest(); //第一步：创建需要的对象
+//		httpRequest.open('POST', "http://1.youzhanmall.com/?mod=index&code=gyl_app_yzorder", true); //第二步：打开连接/***发送json格式文件必须设置请求头 ；如下 - */
+//		httpRequest.setRequestHeader("Content-type", "application/json"); //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）var obj = { name: 'zhansgan', age: 18 };
+//		httpRequest.send(JSON.stringify(data)); //发送请求 将json写入send中
 		/**
 		 * 获取数据后的处理程序
 		 */
@@ -97,7 +97,71 @@ function myFunction() {
 			} else {
 				alert("服务器错误！");
 			}
-		});*/
+//		});*/
+//
+//	}
+//}
 
-	}
+
+//验证表单是否为空，若为空则将焦点聚焦在input表单上，否则表单通过，登录成功
+function LoginFunction(){
+    var username = $("#username"),$password = $("#password");
+    var username = $username.val(),password = $password.val();
+    if(!username || username == ""){
+        showMsg("请输入用户名");
+        form.username.focus ();
+        return false;
+    }
+    if(!password || password == ""){
+        showMsg("请输入密码");
+        form.password.focus ();
+        return false;
+    }
+这里为用ajax获取用户信息并进行验证，如果账户密码不匹配则登录失败，如不需要验证用户信息，这段可不写
+   $.ajax({
+//      url : systemURL,// 获取自己系统后台用户信息接口
+        url: "http://www.bohanserver.top:8088/webservice.asmx/Login"
+        data :{"password":password,"username":username},
+        type : "GET",
+        dataType: "json",
+        success : function(data) {
+            if (data){
+                if (data.code == "1111") { //判断返回值，这里根据的业务内容可做调整
+                        setTimeout(function () {//做延时以便显示登录状态值
+                           showMsg("正在登录中...");
+                           console.log(data);
+//                         window.location.href =  url;//指向登录的页面地址
+                          window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login";
+                       },100)
+                    } else {
+                        showMsg(data.message);//显示登录失败的原因
+                        return false;
+                    }
+                }
+            },
+            error : function(data){
+                showMsg(data.message);
+            }
+    });
 }
+
+//错误信息提醒
+function showMsg(msg){
+    $("#CheckMsg").text(msg);
+}
+
+//监听回车键提交
+$(function(){
+    document.onkeydown=keyDownSearch;
+    function keyDownSearch(e) {
+        // 兼容FF和IE和Opera
+        var theEvent = e || window.event;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        if (code == 13) {
+            $('#submit').click();//具体处理函数
+            return false;
+        }
+        return true;
+    }
+});
+
