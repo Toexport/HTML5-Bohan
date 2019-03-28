@@ -88,28 +88,27 @@ function LoginFunction(){
     var name = document.getElementById("username").value;
     var pwd = document.getElementById("password").value;
     if(name == null || name == "" || name == undefined){
-        showMsg("请输入用户名");
-//      alert("用户名不能为空！");
+//      showMsg("请输入用户名");
+        alert("用户名不能为空！");
         form.name.focus ();
         return false;
     }
     if(pwd == null || pwd == "" || pwd == undefined){
-        showMsg("请输入密码");
-//      alert("请输入密码");
+//      showMsg("请输入密码");
+        alert("请输入密码");
         form.pwd.focus ();
         return false;
     }
 //这里为用ajax获取用户信息并进行验证，如果账户密码不匹配则登录失败，如不需要验证用户信息，这段可不写
    $.ajax({
 //      url : systemURL,// 获取自己系统后台用户信息接口
-        url: "https://www.bohanserver.top:8088/webservice.asmx/Login",
-        data :{"username":name,"password":pwd},
-//      data : {"userName":name,"password":pwd},
+        url:"http://www.bohanserver.top:8088/webservice.asmx/Login",
+        data : {"userName":name,"password":pwd},
         type : "GET",
         dataType: "json",
         success : function(data) {
             if (data){
-                if (data.statusCode == "0") { //判断返回值，这里根据的业务内容可做调整
+                if (data.code == "0") { //判断返回值，这里根据的业务内容可做调整
                         setTimeout(function () {//做延时以便显示登录状态值
                            showMsg("正在登录中...");
                            showMsg(data.message);
@@ -130,6 +129,7 @@ function LoginFunction(){
             }
     });
 }
+
 //错误信息提醒
 function showMsg(msg){
     $("#CheckMsg").text(msg);
