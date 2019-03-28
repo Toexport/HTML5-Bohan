@@ -1,5 +1,4 @@
 
-
 function WebSocketTest() {
             if ("WebSocket" in window) {
                alert("您的浏览器支持 WebSocket!");
@@ -8,7 +7,7 @@ function WebSocketTest() {
                var ws = new WebSocket("ws://122.10.97.35:8888");
                ws.onopen = function() {
                   // Web Socket 已连接上，使用 send() 方法发送数据
-//                ws.send("1000");
+                  ws.send("1000");
                   alert("数据发送中...");
                };
                ws.onmessage = function (evt)  { 
