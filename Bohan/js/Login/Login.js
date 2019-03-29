@@ -100,30 +100,35 @@ function LoginFunction(){
         return false;
     }
 //这里为用ajax获取用户信息并进行验证，如果账户密码不匹配则登录失败，如不需要验证用户信息，这段可不写
-   $.ajax({
-//      url : systemURL,// 获取自己系统后台用户信息接口
+  $.ajax({
+  	    //服务器请求地址
         url:"http://www.bohanserver.top:8088/webservice.asmx/Login",
         data : {"userName":name,"password":pwd},
+        //设置请求方法
         type : "GET",
+        //设置数据类型
         dataType: "json",
-        success : function(data) {
-            if (data){
-                if (data.code == "0") { //判断返回值，这里根据的业务内容可做调整
-                        setTimeout(function () {//做延时以便显示登录状态值
-                           showMsg("正在登录中...");
-                           showMsg(data.message);
-//                         console.log(data);
-//                         window.location.href =  url;//指向登录的页面地址
-                          window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login";
-//                        window.location.href = "../list/list .js";
-                       },100)
-                    } else {
-                        showMsg(data.message);//显示登录失败的原因
-                        window.location.href = "../Login/Login.js";
-                        return false;
-                    }
-                }
-            },
+        //是否 执行缓存
+        cache:false,
+       //contentType: 'application/x-www-form-urlencoded',   
+//      success : function(data) {
+//          if (data){
+//              if (data.code == "0") { //判断返回值，这里根据的业务内容可做调整
+//                      setTimeout(function () {//做延时以便显示登录状态值
+//                         showMsg("正在登录中...");
+//                         showMsg(data.message);
+////                         console.log(data);
+////                         window.location.href =  url;//指向登录的页面地址
+//                        window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login";
+////                        window.location.href = "../list/list .js";
+//                     },100)
+//                  } else {
+//                      showMsg(data.message);//显示登录失败的原因
+//                      window.location.href = "../Login/Login.js";
+//                      return false;
+//                  }
+//              }
+//          },
             error : function(data){
                 showMsg(data.message);  
             }
