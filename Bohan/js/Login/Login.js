@@ -1,20 +1,20 @@
-
+//
 //function LoginFunction() {
-////	 document.getElementById("demo").innerHTML="My First External JavaScript";
 //	var name = document.getElementById("username").value;
 //	var pwd = document.getElementById("password").value;
 //	if (name == "") {
 //		alert("用户名不能为空！");
 //	} else if (pwd == "") {
 //		alert("密码不能为空！");
-//	} else  if (name != "" && pwd != "" && pwd.length >= 6) {
+//	} 
+//	else if (name != "" && pwd != "" && pwd.length >= 6) {
 //		 alert("登录成功！");
-//		 window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login?username=name&password=psw";
+//		 window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login";
 //		}else{
 //		 	alert("用户名或密码错误！");
 //		 	window.location.href = "index.html";
 //		 }
-//
+
 //		var data = {
 //			"username": name,
 //			"password": pwd,
@@ -27,7 +27,6 @@
 ////		 获取数据后的处理程序 
 //		httpRequest.onreadystatechange = function() { //请求后的回调接口，可将请求成功后要执行的程序写在其中
 //			document.getElementById("demo").innerHTML = "数据回调";
-////			 alert(httpRequest.status);
 //			if (httpRequest.readyState == 4) { //验证请求是否发送成功
 //				document.getElementById("demo").innerHTML = httpRequest.responseXML;
 //				var json = httpRequest.responseText; //获取到服务端返回的数据
@@ -47,7 +46,7 @@
 //		 				console.log(json);
 //		 			}
 //		 		};
-//
+
 // $.post("http://www.bohanserver.top:8088/webservice.asmx/Login", data, function(data, textStatus, xhr) {
 //			if (textStatus == "success") {
 //				if (data[0]["returnflag"] == "1") {
@@ -82,7 +81,6 @@
 
 
 
-
 //验证表单是否为空，若为空则将焦点聚焦在input表单上，否则表单通过，登录成功
 function LoginFunction(){
     var name = document.getElementById("username").value;
@@ -105,30 +103,29 @@ function LoginFunction(){
         url:"http://www.bohanserver.top:8088/webservice.asmx/Login",
         data : {"userName":name,"password":pwd},
         //设置请求方法
-        type : "GET",
+        type : "SOAP",
         //设置数据类型
         dataType: "json",
         //是否 执行缓存
-        cache:false,
-       //contentType: 'application/x-www-form-urlencoded',   
-//      success : function(data) {
-//          if (data){
-//              if (data.code == "0") { //判断返回值，这里根据的业务内容可做调整
-//                      setTimeout(function () {//做延时以便显示登录状态值
-//                         showMsg("正在登录中...");
-//                         showMsg(data.message);
-////                         console.log(data);
-////                         window.location.href =  url;//指向登录的页面地址
-//                        window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login";
-////                        window.location.href = "../list/list .js";
-//                     },100)
-//                  } else {
-//                      showMsg(data.message);//显示登录失败的原因
-//                      window.location.href = "../Login/Login.js";
-//                      return false;
-//                  }
-//              }
-//          },
+        cache:false, 
+        success : function(data) {
+            if (data){
+                if (data.code == "0") { //判断返回值，这里根据的业务内容可做调整
+                        setTimeout(function () {//做延时以便显示登录状态值
+                           showMsg("正在登录中...");
+                           showMsg(data.message);
+//                         console.log(data);
+//                         window.location.href =  url;//指向登录的页面地址
+                          window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login";
+//                        window.location.href = "../list/list .js";
+                       },100)
+                    } else {
+                        showMsg(data.message);//显示登录失败的原因
+                        window.location.href = "../Login/Login.js";
+                        return false;
+                    }
+                }
+            },
             error : function(data){
                 showMsg(data.message);  
             }
