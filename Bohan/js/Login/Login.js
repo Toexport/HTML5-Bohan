@@ -21,7 +21,7 @@
 //		};
 //		document.getElementById("demo").innerHTML = "正在请求...";
 //		var httpRequest = new XMLHttpRequest(); //第一步：创建需要的对象
-//		httpRequest.open('POST', "http://www.bohanserver.top:8088/webservice.asmx/Login?username=name&password=psw", true); //第二步：打开连接/***发送json格式文件必须设置请求头 ；如下 - */
+//		httpRequest.open('POST', "http://www.bohanserver.top:8088/webservice.asmx/Login", true); //第二步：打开连接/***发送json格式文件必须设置请求头 ；如下 - */
 //		httpRequest.setRequestHeader("Content-type", "application/json"); //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）var obj = { name: 'zhansgan', age: 18 };
 //		httpRequest.send(JSON.stringify(data)); //发送请求 将json写入send中
 ////		 获取数据后的处理程序 
@@ -80,7 +80,6 @@
 
 
 
-
 //验证表单是否为空，若为空则将焦点聚焦在input表单上，否则表单通过，登录成功
 function LoginFunction(){
     var name = document.getElementById("username").value;
@@ -103,7 +102,7 @@ function LoginFunction(){
         url:"http://www.bohanserver.top:8088/webservice.asmx/Login",
         data : {"userName":name,"password":pwd},
         //设置请求方法
-        type : "SOAP",
+        type : "GET",
         //设置数据类型
         dataType: "json",
         //是否 执行缓存
@@ -125,7 +124,7 @@ function LoginFunction(){
                         return false;
                     }
                 }
-            },
+            }, 
             error : function(data){
                 showMsg(data.message);  
             }
