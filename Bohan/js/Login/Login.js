@@ -86,7 +86,7 @@ function LoginFunction(){
     var pwd = document.getElementById("password").value;
     if(name == null || name == "" || name == undefined){
 //      showMsg("请输入用户名");
-        alert("用户名不能为空！");
+        alert("用户名不能为空");
         form.name.focus ();
         return false;
     }
@@ -96,15 +96,24 @@ function LoginFunction(){
         form.pwd.focus ();
         return false;
     }
+    
+    
+    /**
 //这里为用ajax获取用户信息并进行验证，如果账户密码不匹配则登录失败，如不需要验证用户信息，这段可不写
   $.ajax({
+  	headers:{
+  		"Content-type":"application/json;charset=utf-8"
+  	},
   	    //服务器请求地址
-        url:"http://www.bohanserver.top:8088/webservice.asmx/Login",
+        url:'http://www.bohanserver.top:8088/webservice.asmx/Login',
+//      url:("Access-Control-Allow-Origin：http://www.bohanserver.top:8088/webservice.asmx/Login"),
         data : {"userName":name,"password":pwd},
         //设置请求方法
-        type : "GET",
+        type : 'GET',
         //设置数据类型
-        dataType: "json",
+        dataType: 'jsonp',
+//      dataType: Access-Control-Allow-Headers=‘json’,
+        jsonpCallback:'callback',
         //是否 执行缓存
         cache:false, 
         success : function(data) {
@@ -115,8 +124,7 @@ function LoginFunction(){
                            showMsg(data.message);
 //                         console.log(data);
 //                         window.location.href =  url;//指向登录的页面地址
-                          window.location.href = "http://www.bohanserver.top:8088/webservice.asmx/Login";
-//                        window.location.href = "../list/list .js";
+                          window.location.href = "../list/list .js";
                        },100)
                     } else {
                         showMsg(data.message);//显示登录失败的原因
@@ -128,8 +136,67 @@ function LoginFunction(){
             error : function(data){
                 showMsg(data.message);  
             }
-    });
+    });*/
+   
+   /**  POST请求*/
+//  function getXhr(){
+//  if (typeof XMLHttpRequest != 'undefined') {
+//    return new XMLHttpRequest();
+//  }
+//}
+//var xhr = getXhr();
+//var stringData = {
+//	name:'suerName',
+//	pwd:'password',
+//}
+//stringData = JSON.stringify(stringData);
+////POST请求
+//xhr.open('POST', 'http://www.bohanserver.top:8088/webservice.asmx/Login');
+//xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//xhr.send(stringData)
+//xhr.onreadystatechange = function(res) {
+//  if (xhr.readyState == 4) {
+//    if (xhr.status == 200) {
+//      console.log(JSON.parse(xhr.responseText))
+//    }
+//  }
+//}
+   
+ function ajax(url, fnSucc, fnFaild){
+    //1.创建对象
+    var oAjax = null;
+    if(window.XMLHttpRequest){
+        oAjax = new XMLHttpRequest();
+    }else{
+        oAjax = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    //2.连接服务器  
+    oAjax.open('GET', "http://www.bohanserver.top:8088/webservice.asmx/Login", true);   //open(方法, url, 是否异步)
+    var stringData = {
+//  username: 'uesrName',
+//  password: 'password',
+    name:'suerName',
+	pwd:'password',
+  }
+     stringData = JSON.stringify(stringData);
+    //3.发送请求  
+    oAjax.send(stringData);
+
+    //4.接收返回
+    oAjax.onreadystatechange = function(){  //OnReadyStateChange事件
+        if(oAjax.readyState == 4){  //4为完成
+            if(oAjax.status == 200){    //200为成功
+//              fnSucc(oAjax.responseText)
+                 console.log(JSON.parse(oAjax.responseText))
+            }else{
+                if(fnFaild){
+                    fnFaild();
+                }
+            }
+        }
+    };
 }
+   }
 
 //错误信息提醒
 function showMsg(msg){
@@ -150,5 +217,4 @@ $(function(){
         return true;
     }
 });
-
 
