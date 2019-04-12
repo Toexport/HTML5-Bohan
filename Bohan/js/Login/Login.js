@@ -15,36 +15,30 @@ function LoginFunction(){
 //      form.pwd.focus ();
         return false;
     }
+    
 //这里为用ajax获取用户信息并进行验证，如果账户密码不匹配则登录失败，如不需要验证用户信息，这段可不写
   $.ajax({
-//	headers:{
-//		"Content-type":"application/json;charset=utf-8"
-//	},
   	    //服务器请求地址
-//      url:'http://www.bohanserver.top:8088/webservice.asmx/Login',
-        url:'http://www.funnywork.com:443/users/demo',
+        url:'http://www.bohanserver.top:8088/webservice.asmx/Login',
         data : {"userName":name,"password":pwd},
         //设置请求方法
         type : 'GET',
-        //设置数据类型
-        dataType: 'jsonp',
-        jsonpCallback:'liudehua',
-//      jsonpCallback:'callback',
-//      jsonpCallback:"successCallback",
-        //是否 执行缓存
-//      cache:false, 
+//      //设置数据类型
+//       dataType: "xml",
+//       timeout: 1000,      //设定超时
+//       cache: false,       //禁用缓存
         success : function(data) {
-        	console.log(data)
+        	data = $.xml2json(data);
+        	console.log(data);
             if (data){
                 if (data.code == "0") { //判断返回值，这里根据的业务内容可做调整
                         setTimeout(function () {//做延时以便显示登录状态值
-                           showMsg("正在登录中...");
+//                         showMsg("正在登录中...");
                            showMsg(data.message);
 //                         console.log(data);
 //                         window.location.href =  url;//指向登录的页面地址
-//                        window.location.href = "../list/list .js";
                        },100)
-                    } else {
+                    }else {
                         showMsg(data.message);//显示登录失败的原因
 //                      window.location.href = "../Login/Login.js";
                         return false;
@@ -52,11 +46,15 @@ function LoginFunction(){
                 }
             }, 
             error : function(data){
+            	     console.log("Fail");
+            		console.log(data);
                 showMsg(data.message);  
             }
     });
  }
-
+ 
+     
+     
 //错误信息提醒
 function showMsg(msg){
     $("#CheckMsg").text(msg);
@@ -76,4 +74,5 @@ $(function(){
         return true;
     }
 });
+
 

@@ -1,7 +1,4 @@
 
-
-
-
 //验证输入的电话号码是否是11位数字
 //if(!phoneReg.test($('[name=mobileNum]').val())){
 //$('[name=mobileNum]').after(errMsg('请输入正确的手机号码！'));
@@ -50,10 +47,12 @@ function sendmessage(obj,second){
         url:'http://www.bohanserver.top:8088/webservice.asmx/GetRegisterCode',
         data : {"mobileNum":name,"flag":0},
         //设置请求方法
+        //设置请求方法
         type : 'GET',
         //设置数据类型
-        dataType: 'jsonp',
-        jsonpCallback:'liudehua',
+         dataType: "xml",
+         timeout: 1000,      //设定超时
+         cache: false,       //禁用缓存
         success : function(data) {
         	console.log(data)
             if (data){
