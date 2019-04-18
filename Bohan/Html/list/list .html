@@ -2,7 +2,6 @@
 <html lang="zh-cn">
 	<head>
 		<meta charset="UTF-8">
-		<!--<link rel="stylesheet" type="text/css" href="css/listCss/list.css" />-->
 		<link rel="stylesheet" type="text/css" href="../../css/listCss/list.css"/>
 		<title>设备列表</title>
 	</head>
@@ -11,18 +10,20 @@
 			<section>
 				<h1>伯瀚智能</h1>
 			    <ul>
-				     <li><a href="../list/list .html" >设备列表</a></li>
-				     <li><a href="../ParameterSet/ParameterSte.html" class="active" >参数设置</a></li>
+				     <li><a>设备列表</a></li>
+			    </ul> 
+			    <h2>
+			    <ul>
+			    		<li><a href="../ParameterSet/ParameterSte.html" class="active" >参数设置</a></li>
 				     <li><a href="###">实时数据查询</a></li>
 				     <li><a href="###">历史数据查询</a></li>
-			    </ul> 
+			    </ul>
+			    </h2>
 			</section>
 		</nav>
 		<header id="header">
-			<!--<div style="background-color:red;width:70px;height:50px"></div>-->
 			 <section>
 			 	<ul>
-			 		<li><a class="sidebox">设备位置</a></li>
 			 		<li><a class="sidebox">设备名称</a></li>
 			 		<li><a class="sidebox">全开 / 全关</a></li>
 			 		</ul>
@@ -32,82 +33,23 @@
 			<section>
 			<ul>
 				<li><a class="sidebox" href="ForgotPassword.html">走廊</a></li>
-				<li><a class="sidebox" href="ForgotPassword.html">三位开关</a></li>
-				<!--<li><button>全开 </button> </li>
-				<li><button>全关 </button> </li>-->
+				<!--<li><a class="sidebox" href="ForgotPassword.html">三位开关</a></li>-->
 				<li><a class="sidebox"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-				<li></li>
+					 <button type="button"  style=background-color:red;>全关</button></a></li>
+					 
+					 <!--<input type="submit" onclick="RequestByToken()" value="TEST">-->
+					 <input type="submit" onclick="WebSocketTest()" value="WebSocket" />
+					 
 			</ul>
-			<ul>
-				<li><a class="sidebox" href="###">大厅</a></li>
-				<li><a class="sidebox" href="###">三位位开关</a></li>
-				<li><a class="sidebox" href="###"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-			</ul>
-			<ul>
-				<li><a class="sidebox" href="###">大厅</a></li>
-				<li><a class="sidebox" href="###">三位位开关</a></li>
-				<li><a class="sidebox" href="###"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-			</ul>
-			<ul>
-				<li><a class="sidebox" href="###">主卧室</a></li>
-				<li><a class="sidebox" href="###">一位开关</a></li>
-				<li><a class="sidebox" href="###"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-			</ul>
-			<ul>
-				<li><a class="sidebox" href="###">次卧室</a></li>
-				<li><a class="sidebox" href="###">一位开关</a></li>
-				<li><a class="sidebox" href="###"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-			</ul>
-			<ul>
-				<li><a class="sidebox" href="###">婴孩房</a></li>
-				<li><a class="sidebox" href="###">一位开关</a></li>
-				<li><a class="sidebox" href="###"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-			</ul>
-			<ul>
-				<li><a class="sidebox" href="###">厨房</a></li>
-				<li><a class="sidebox" href="###">一位开关</a></li>
-				<li><a class="sidebox" href="###"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-			</ul>
-			<ul>
-				<li><a class="sidebox" href="###">取暖灯</a></li>
-				<li><a class="sidebox" href="###">二位开关</a></li>
-				<li><a class="sidebox" href="###"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-			</ul>
-			<ul>
-				<li><a class="sidebox" href="###">取暖灯</a></li>
-				<li><a class="sidebox" href="###">二位开关</a></li>
-				<li><a class="sidebox" href="###"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-			</ul>
-			<ul>
-				<li><a class="sidebox" href="###">走廊</a></li>
-				<li><a class="sidebox" href="###">一位开关</a></li>
-				<li><a class="sidebox" href="###"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-			</ul>
-			<ul>
-				<li><a class="sidebox" href="###">洗漱房</a></li>
-				<li><a class="sidebox" href="###">一位开关</a></li>
-				<li><a class="sidebox" href="###"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-			</ul>
-			<ul>
-				<li><a class="sidebox" href="###">洗手间</a></li>
-				<li><a class="sidebox" href="###">一位开关</a></li>
-				<li><a class="sidebox" href="###"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-			</ul>
+			
 		</section>
 		</section>
-		<footer>footer</footer>
-		
 	</body>
+	<script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.magnific-popup.js"></script>
+    <script type="text/javascript" src="../../js/list/list .js"></script>
+    <script type="text/javascript" src="../../WebSocket/WebSocket.js"></script>
+    <script type="text/javascript" src="http://www.jsons.cn/Down/jquery.json2xml.js"></script>
+    <script type="text/javascript" src="http://www.jsons.cn/Down/jquery.xml2json.js"></script>
+    
 </html>

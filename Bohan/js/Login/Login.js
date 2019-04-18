@@ -25,7 +25,6 @@ function LoginFunction(){
          cache: false,       //禁用缓存
          
         success : function(data) {
-        	
         	data = $.xml2json(data);// xml转json
         	var strData = data;
         	var str = strData.substring(); //获取指定的字符
@@ -41,21 +40,25 @@ function LoginFunction(){
               console.log(obj.message);
               var content = obj.content;// Token
               console.log(content);
-//             window.location.href =  url;//指向登录的页面地址
+//             window.location.href="../list/list .js";//指向登录的页面地址
+              window.location.href = "/Bohan/Html/list/list%20.html?content="+content;
+               Pushlist();
              },100);
              }else {
                  showMsg(obj.message);//显示登录失败的原因
                  alert(obj.message);
+                 location.replace(document.referrer); // 错误重新刷新一次界面
                  return false;
                }
             }, 
             error : function(data){
             	    console.log("Fail");
+            	    location.replace(document.referrer); // 错误重新刷新一次界面
                 showMsg(obj.message);  
             }
     });
  }
-   
+
 //错误信息提醒
 function showMsg(msg){
     $("#CheckMsg").text(msg);

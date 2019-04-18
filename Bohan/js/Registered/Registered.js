@@ -1,25 +1,13 @@
-
-//验证输入的电话号码是否是11位数字
-//if(!phoneReg.test($('[name=mobileNum]').val())){
-//$('[name=mobileNum]').after(errMsg('请输入正确的手机号码！'));
-//　　　　return false；
-//}
 //获取验证码
-function sendmessage(obj,second){
+function sendmessageS(obj,second){
 	var name = document.getElementById("mobileNum").value;
 	if(name == null || name == "" || name == undefined){
 //      showMsg("请输入用户名");
         alert("手機號碼不能为空");
 //      form.name.focus ();
         return false;
-  }else {
-  	if(sendmessage){
-			countDown(obj,second)
-		}else{
-			alert("错误，虽然永远走不到这里！");
-		}
-    }
-	function countDown(obj,second){
+ }
+function countDown(obj,second){
     // 如果秒数还是大于0，则表示倒计时还没结束
      if(second>=0){
           // 获取默认按钮上的文字
@@ -41,7 +29,7 @@ function sendmessage(obj,second){
         // 按钮里的内容恢复初始状态
         obj.value = buttonDefaultValue;
        } 
-  }
+}
     //这里为用ajax获取用户信息并进行验证，如果账户密码不匹配则登录失败，如不需要验证用户信息，这段可不写
   $.ajax({
         url:'http://www.bohanserver.top:8088/webservice.asmx/GetRegisterCode',
@@ -49,7 +37,10 @@ function sendmessage(obj,second){
         //设置请求方法
         type : 'GET',
         //设置数据类型
-        dataType: 'json',
+         dataType: "xml",
+         timeout: 1000,      //设定超时
+         cache: false,       //禁用缓存
+         
         success : function(data) {
         	data = $.xml2json(data);// xml转json
         	var strData = data;
@@ -63,12 +54,71 @@ function sendmessage(obj,second){
               showMsg(obj.message);
               alert(obj.message);
               console.log(obj.message);
-              var content = obj.content;// Token
-              console.log(content);
-//             window.location.href =  url;//指向登录的页面地址
              },100);
              }else {
                  showMsg(obj.message);//显示登录失败的原因
+                 alert(obj.message);
+//               location.replace(document.referrer); // 错误重新刷新一次界面
+                 return false;
+               }
+            }, 
+            error : function(data){
+            	    console.log("Fail");
+                showMsg(obj.message);  
+//              location.replace(document.referrer); // 错误重新刷新一次界面
+            }
+    });
+ }
+
+
+
+// 注册
+function Registered() {
+//验证表单是否为空，若为空则将焦点聚焦在input表单上，否则表单通过，登录成功
+    var name = document.getElementById("mobileNum").value;
+    var Code = document.getElementById("VerCode").value;
+    var pwd = document.getElementById("password").value;
+    if(name == null || name == "" || name == undefined){
+        alert("手机号不能为空");
+        return false;
+    }
+    if(Code == null || Code == "" || Code == undefined){
+        alert("请输入验证码");
+        return false;
+    }
+    if(pwd == null || pwd == "" || pwd == undefined){
+        alert("请输入密码");
+        return false;
+    }
+//这里为用ajax获取用户信息并进行验证，如果账户密码不匹配则登录失败，如不需要验证用户信息，这段可不写
+$.ajax({
+	    //服务器请求地址
+        url:'http://www.bohanserver.top:8088/webservice.asmx/Register',
+        data : {"userName":name,"checkCode":Code,"password":pwd,"flag":0},
+        //设置请求方法
+        type : 'GET',
+        //设置数据类型
+         dataType: "xml",
+         timeout: 1000,      //设定超时
+         cache: false,       //禁用缓存
+        success : function(data) {
+        	console.log(data);
+        	data = $.xml2json(data);// xml转json
+        	var strData = data;
+        	var str = strData.substring(); //获取指定的字符
+        	console.log(str);
+        var obj = JSON.parse(str);
+        	var code = obj.statusCode;
+        if (obj.statusCode == 0) { //判断返回值，这里根据的业务内容可做调整
+           setTimeout(function () {//做延时以便显示登录状态值
+              showMsg("正在修改中...");
+              showMsg(obj.message);
+              alert(obj.message);
+              console.log(obj.message);
+              window.location.href="/Bohan/Html/login/index.html";//指向登录的页面地址
+             },100);
+             }else {
+//               showMsg(obj.message);//显示登录失败的原因
                  alert(obj.message);
                  return false;
                }
@@ -78,7 +128,8 @@ function sendmessage(obj,second){
                 showMsg(obj.message);  
             }
     });
- }
+}
+
 
 //错误信息提醒
 function showMsg(msg){

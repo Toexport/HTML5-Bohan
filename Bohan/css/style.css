@@ -121,7 +121,7 @@ form {
 .form-sub-w3{
 	position:relative;
 }
- .form-w3-agile input[type="text"], .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
+ .form-w3-agile input[type="text"],.form-w3-agile input[type="VerCode"], .form-w3-agile input[type="password"], .form-w3-agile\n input[type="email"] {
     outline: none;
     font-size: 15px;
     color: #FFFFFF;
@@ -334,7 +334,7 @@ label p {
 	.main-agileits {
 		width: 48%;
 	}
-	.form-w3-agile input[type="text"], .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
+	.form-w3-agile input[type="text"],.form-sub-w3ls input[type="VerCode"], .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
 		font-size: 14px;
 		padding: 10px 10px;
 		margin-bottom: 20px;
@@ -364,6 +364,10 @@ label p {
 @media(max-width:1280px){
 	.form-w3-agile input[type="text"], .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
 		width: 96.3%;
+	}
+	/*验证码输入框*/
+	.form-w3-agile input[type="VerCode"] {
+		width: 80.3%;
 	}
 }
 @media(max-width:1080px){
@@ -482,7 +486,7 @@ label p {
 	.main-agileits {
 		width: 75%;
 	}
-	.form-w3-agile input[type="text"], .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
+	.form-w3-agile input[type="text"],.form-w3-agile input[type="VerCode"] .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
 		width: 95.7%;
 	}
 }
@@ -490,7 +494,7 @@ label p {
 	h1 {
 		font-size: 23px;
 	}
-	.form-w3-agile input[type="text"], .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
+	.form-w3-agile input[type="text"],.form-w3-agile input[type="VerCode"] .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
 		width: 95.4%;
 	}
 	.p-bottom-w3ls {
@@ -545,7 +549,7 @@ label p {
 	.form-w3-agile {
 		padding: 30px 25px;
 	}
-	.form-w3-agile input[type="text"], .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
+	.form-w3-agile input[type="text"], .form-w3-agile input[type="VerCode"],.form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
 		width: 94.2%;
 	}
 	a.forgot-w3layouts {
@@ -569,7 +573,7 @@ label p {
 	h1 {
 		line-height: 30px;
 	}
-	.form-w3-agile input[type="text"], .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
+	.form-w3-agile input[type="text"],.form-w3-agile[type="VerCode"], .form-w3-agile input[type="password"], .form-w3-agile input[type="email"] {
 		width: 93.1%;
 		font-size: 13px;
 	}
