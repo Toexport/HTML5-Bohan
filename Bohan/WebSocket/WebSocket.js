@@ -6,19 +6,10 @@ function WebSocketTest() {
                var ws = new WebSocket("ws://www.bohanserver.top:8888");
                ws.onopen = function() {
                   // Web Socket 已连接上，使用 send() 方法发送数据
-                  //@"+RECV:0,E7661801090006000100008F0D";
-//                var Head = "+RECV:0,";
-//                console.log(Head);
-//                var Parameter = "E7621801090021000013000500800000003D0D";
-//                var dataS = ['Head','Parameter'];
-//                console.log(dataS);
-                  var susename = "3A1002004115118041624";
-                  var part = "LoadName";
-                  var name = "测试专用@测试专用";
-                  var str = susename+part+name;
-//                3A1002004115118041624;LoadName;Boss测试专用@boss测试专用;000D
-                  
-//                var Str = (susename,part,name);
+//                var susename = "3A1002004115118041624";
+//                var part = "LoadName";
+//                var name = "测试专用@测试专用";
+//                var str = susename+part+name;
                   alert(str);
                   ws.send("E7621801090021000013000500810000003E0D");
 //                E7621801090021000013000500800000003D0D  开
