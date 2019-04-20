@@ -3,7 +3,7 @@ function WebSocketTest() {
             if ("WebSocket" in window) {
                alert("您的浏览器支持 WebSocket!");
                // 打开一个 web socket
-               var ws = new WebSocket("ws://www.bohanserver.top:8888");
+               var ws = new WebSocket("ws://www.bohanserver.top:8088");
                ws.onopen = function() {
                   // Web Socket 已连接上，使用 send() 方法发送数据
 //                var susename = "3A1002004115118041624";
