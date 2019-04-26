@@ -78,10 +78,11 @@ button {
  }
 
 #nav >section >ul {
-	width: 550px;
+	width: 50%;
 	/*background-color: red;*/
 	height: 70px ;
 	line-height: 70px;
+	font-size: 15px; // 字体大小
 	color: #EEEEEE;
 	float: right;
 }
@@ -131,6 +132,10 @@ button {
 	width: 50%;
 	text-align: center;
 	float: left;
+}
+  .active {
+    border-color: #df5799;
+    background: #df5799;
 }
 
 #section >section >ul >li {
