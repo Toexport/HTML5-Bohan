@@ -28,20 +28,20 @@ function LoginFunction(){
 				var str = strData.substring(); //获取指定的字符
 				console.log(str);
 				var obj = JSON.parse(str);
-				var code = obj.statusCode;
+//				var code = obj.statusCode;
 				//      	console.log(code);
 				if(obj.statusCode == 0) //判断返回值，这里根据的业务内容可做调整
 				{
 					setTimeout(
 						function() //做延时以便显示登录状态值
 					    {
-							showMsg("正在登录中...");
-							showMsg(obj.message);
+//							showMsg("正在登录中...");
+//							showMsg(obj.message);
 							alert(obj.message);
 							console.log(obj.message);
 							var content = obj.content; // Token
 							console.log(content);
-							$.cookie('userToken', content, {expires: 1, path:'/'});
+							$.cookie('userToken', content, {expires: 0.1, path:'/'});
 //							window.location.href = "/Bohan/Html/list/list%20.html?content=" + content;
                             window.location.href = "/Bohan/Html/list/list%20.html";
 //								Pushlist();

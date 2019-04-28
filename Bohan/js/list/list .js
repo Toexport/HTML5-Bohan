@@ -23,10 +23,10 @@ var req = RequestByToken(USERTOKEN);
 
 function RequestByToken(AToken) {
 	console.log('Param:'+AToken);
-	if (AToken == null) 
-	{
-		window.location.href="/Bohan/Html/login/index.html";//指向登录的页面地址
-	}
+//	if (AToken == null) 
+//	{
+//		window.location.href="/Bohan/Html/login/index.html";//指向登录的页面地址
+//	}
 var dataXML = '<?xml version="1.0" encoding="utf-8"?>'; 
 dataXML = dataXML +'<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; 
 dataXML = dataXML +'  <soap:Header>' 
@@ -63,7 +63,26 @@ $.ajax({
 	},
 	success: function(data) {
         	var dataStr = $(data).find("GetLoadNameListResult").text();
-         console.log(dataStr );
+         console.log(dataStr);
+        var obj = JSON.parse(dataStr);// 数据转换JSON
+        var Str = obj.content;
+//      console.log(Str);
+        var Arr = Str.split(',');
+        console.log(Arr);
+//      var tb = document.getElementById('sidebox');
+        for (var i = 0; i < Arr.length; i++) 
+        {
+           var item = Arr[i];
+           console.log(item);
+           document.getElementById('sidebox').innerHTML = item;
+    }
+         
+         if (obj.statusCode == 2)
+         {
+            alert(obj.message);
+            $.removeCookie('userToken', { path: '/' }); // => true//通过传递null作为cookie的值即可
+            window.location.href="/Bohan/Html/login/index.html";//指向登录的页面地址
+         }
 	},
 	error: function() {
 		console.log('Failed');
@@ -71,4 +90,3 @@ $.ajax({
 	async:true
 });
 }
-
