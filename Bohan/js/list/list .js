@@ -18,11 +18,15 @@
 //}
 
 
-var userToken = .$cookie('userToken');
-var req = RequestByToken(userToken);
+var USERTOKEN = $.cookie('userToken');
+var req = RequestByToken(USERTOKEN);
 
 function RequestByToken(AToken) {
 	console.log('Param:'+AToken);
+	if (AToken == null) 
+	{
+		window.location.href="/Bohan/Html/login/index.html";//指向登录的页面地址
+	}
 var dataXML = '<?xml version="1.0" encoding="utf-8"?>'; 
 dataXML = dataXML +'<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; 
 dataXML = dataXML +'  <soap:Header>' 
@@ -35,8 +39,7 @@ dataXML = dataXML +'<soap:Body>'
                   +'<GetUserDeviceList xmlns="http://bohansever.top/" />' 
                   + '</soap:Body>'; 
 dataXML = dataXML + '</soap:Envelope>';
-//console.log(dataXML);
-var URLAddr="http://www.bohanserver.top:8088/webservice.asmx?op=GetLoadNameList";
+var URLAddr ="http://www.bohanserver.top:8088/webservice.asmx?op=GetLoadNameList";
 var xmlhttp;
 if (window.XMLHttpRequest)
 {
@@ -46,6 +49,7 @@ else
 {
 	xmlhttp = new ActiveXObject("Micosoft.xmlhttp");	
 }
+
 $.ajax({
 	type:"POST",
 	url:URLAddr,

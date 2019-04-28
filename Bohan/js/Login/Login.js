@@ -41,9 +41,10 @@ function LoginFunction(){
 							console.log(obj.message);
 							var content = obj.content; // Token
 							console.log(content);
-							$.cookie('userToken', content, {expires: 0.083, domain: 'bohanserver.top'});
-							window.location.href = "/Bohan/Html/list/list%20.html?content=" + content;
-								Pushlist();
+							$.cookie('userToken', content, {expires: 1, path:'/'});
+//							window.location.href = "/Bohan/Html/list/list%20.html?content=" + content;
+                            window.location.href = "/Bohan/Html/list/list%20.html";
+//								Pushlist();
 						},
 						100);
 				} 
