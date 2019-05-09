@@ -1,0 +1,75 @@
+@charset "utf-8";
+/*此处是贴边*/
+/*body,h1,ul {
+	margin: 0;
+	padding: 0;
+}*/
+
+/*去掉文字前面的点*/
+ul {
+	list-style: outside none none;
+}
+/*输入框大小长度*/
+input[type = "text"] {
+	width: 85px;
+	height: 22px;
+}
+/*按钮大小，文字大小*/
+button {
+	width: 55px;
+	height: 30px;
+	background-color:#1E9FFF;
+	color: white;
+}
+
+#section {
+	min-width: 100%;
+	/*min-width: 1236px; //测试*/
+ 	height: 251px; 
+ 	/*background-color: yellow;*/
+	margin: 0 auto;
+}
+
+#section .sidebox {
+	width: 50%;
+	color: #000000;
+ 	float: right;	
+	margin: 0 auto;// 居中
+}
+#section .sidebox {
+	width: 50%;
+	color: #000000;
+ 	float: left;	
+	margin: 0 auto;// 居中
+}
+/*设置文字颜色*/
+#section .sideboxS {
+	color: #1E9FFF;
+	display: block;
+}
+#section>ul {
+ 	width: 50%;
+ 	/*width: 1121px;// 测试*/
+	height: 49.5px;
+	text-align: center;
+	color: #000000;
+ 	float: left;	
+	margin: 0 auto;// 居中
+}
+
+#section >div>ul {
+	width: 50%;
+	/*width: 1121px;// 测试*/
+	height: 150px;
+	text-align: center;
+	color: #000000;
+ 	float: left;	
+	margin: 0 auto;// 居中
+}
+
+#section>ul {
+	border: 0.5px solid gainsboro;
+}
+#section>div>ul {
+	border: 0.5px solid gainsboro;
+}

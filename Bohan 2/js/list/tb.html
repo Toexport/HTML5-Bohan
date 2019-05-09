@@ -1,0 +1,67 @@
+<table width="600" border="1" cellspacing="0">
+<!--<head>
+	<meta charset="UTF-8">
+</head>-->
+    <thead>
+       <tr>
+          <th>�豸���</th>
+          <th>ȫ�� / ȫ��</th>
+       </tr> 
+    </thead>
+    <tbody id="tbDeviceNameList"></tbody>
+ </table>
+
+
+
+<script type="text/javascript">
+  
+  //д��һ����̬��JSON���,���Ҫд�ɶ�̬�ģ����Ǵ�list.js����ȡ������
+  var deviceNameList = [
+  			{deviceName:'Ԥ����'},
+			{deviceName:'WIFI���ܿ�����'},
+			{deviceName:'�ƶ�����10A'},
+             {deviceName:'�ƶ�16A'},
+             {deviceName:'����ר��@����ר��'}
+			]; 
+  
+  window.onload = function(){
+	  var tbody = document.getElementById('tbDeviceNameList'); 
+	  for(var i = 0;i < deviceNameList.length; i++) //����json���
+          {
+		  var trow = getDataRow(deviceNameList[i]); //���÷���,����tr���
+	  	  tbody.appendChild(trow);
+	   }
+	  
+	  }
+	  
+  function getDataRow(colValue){
+	 var row = document.createElement('tr'); //������
+	 
+	 var deviceNameCell = document.createElement('td'); //������һ�У���ӦdeviceName
+	 deviceNameCell.innerHTML = colValue.deviceName; //������
+	 row.appendChild(deviceNameCell); //������
+	 
+         //��Ϊ����ֻ��һ������У���������������У���������Ϳ�����
+
+	 
+	 //ÿ�����ȫ��/ȫ�ذ�ť
+	 var oprCell = document.createElement('td');//����������
+	 row.appendChild(oprCell);
+	 var btnOpr = document.createElement('input'); //����һ��input�ؼ�
+	 btnOpr.setAttribute('type','button'); 
+	 btnOpr.setAttribute('value','ȫ��/ȫ��'); 
+	 
+	 //�������ʱ��
+	 btnOpr.onclick=function()
+        {
+		 if(confirm("ȷ��ȫ��/ȫ����"))  //����Ӧ���ж��豸��״̬�ǿ����ǹأ��ǿ�������ʾȫ�أ��ǹأ�����ʾȫ��
+                {
+			 //����Ӧ�õ���js��jsʵ�ֵ���webservice�ӿڣ���������ݵ��豸
+			 
+		 }
+	  }
+         oprCell.appendChild(btnOpr);
+	 return row; //����tr���	 
+	
+}	  
+</script>

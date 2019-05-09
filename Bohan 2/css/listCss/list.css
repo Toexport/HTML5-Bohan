@@ -1,0 +1,187 @@
+@charset "utf-8";
+
+body,h1,h2,ul {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	list-style: outside none none;
+}
+
+ a { 
+	text-decoration: none;
+}
+
+button {
+	width: 85px;
+	height: 30px;
+}
+
+ #nav {
+ 	width: 100%;
+ 	min-width: 1263px;
+ 	height: 70px; 
+ 	background-color: #333;
+ }
+ 
+ #header {
+ 	min-width: 1263px;
+ 	width: 100%;
+ 	height: 50px; 
+ 	background-color: #1E9FFF;
+ }
+ 
+ #section {
+ 	min-width: 1263px;
+ 	width: 100%;
+ 	height: 45px;
+ 	background-color: white;
+ }
+ 
+#nav > section {
+	width: 1263px;
+	/*background-color: red;*/
+	height: 70px;
+	margin: 0 auto;
+}
+
+#header >section {
+	/*background-color: red;*/
+	width: 1263px;
+	height: 50px;
+	margin:0 auto;
+}
+ #section >section {
+ 	/*background-color: red;*/
+ 	width: 1263px;
+ 	height: 50px;
+ 	margin: 0 auto;
+ }
+ 
+ #header .sidebox {
+ 	height: 49px;
+ 	border: 1px solid#EEEEEE;
+ }
+ 
+ section .sidebox {
+ 	height: 49px;
+ 	border: 1px solid#EEEEEE;
+ }
+ 
+ #nav >section >h1 {
+ 	width: 240px;
+ 	height: 70px;
+ 	background-image:url(../../images/banner.jpg);
+ 	text-indent: -9999px;
+ 	float: left;
+ }
+
+#nav >section >ul {
+	width: 50%;
+	/*background-color: red;*/
+	height: 70px ;
+	line-height: 70px;
+	font-size: 15px; // 字体大小
+	color: #EEEEEE;
+	float: right;
+}
+#nav >section >h2>ul {
+	width: 1050px;
+	/*background-color: red;*/
+	height: 55px ;
+	line-height: 51px;
+	font-size: 10px; // 字体大小
+	color: #EEEEEE;
+	float: right;
+}
+
+#header >section >ul {
+	width: 1263px;
+	height: 50px;
+	line-height: 50px;
+	/*color: #EEEEEE;*/
+	color: #000000;
+	background-color: #F5F5FF;
+	float: right;
+}
+
+ #section >section >ul {
+ 	width: 1263px;
+	height: 50px;
+	line-height: 50px;
+	color: #EEEEEE;
+	float: right;
+ }
+ 
+
+#nav >section >ul >li {
+	width: 120px;
+	text-align: center;
+	float: left;
+}
+
+#nav >section >h2 >ul >li {
+	width: 150px;
+	text-align: center;
+	float: left;
+}
+
+#header >section >ul >li {
+	/*width: 97px;*/
+	width: 50%;
+	text-align: center;
+	float: left;
+}
+  .active {
+    border-color: #df5799;
+    background: #df5799;
+}
+
+#section >section >ul >li {
+	/*width: 97px;*/
+	/*width: 421px;*/
+	width: 50%;
+	text-align: center;
+	float: left;
+	
+}
+
+
+#nav >section >ul >li >a {
+	color: #EEEEEE;
+	display: block;
+}
+
+#nav >section >h2 >ul >li >a {
+	color: #EEEEEE;
+	display: block;
+}
+
+#header >section >ul >li >a {
+	/*color: #EEEEEE;*/
+	display: block;
+	
+}
+
+#section >section >ul >li >a {
+	color: #000000;
+	display: block;
+	
+}
+
+
+#nav >section >ul >li >a:hover {
+	background-color: #000000;
+}
+#nav >section >h2 >ul >li >a:hover {
+	background-color: #000000;
+}
+
+/*#header >section > ul >li >a:hover {
+	background-color: #000000;
+}*/
+
+/*#section >section >ul:hover {
+	background-color:wheat;
+}*/

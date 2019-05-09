@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="../../js/JQ/jquery.cookie.js"></script>
 	
 	<script type="text/javascript" src="../../js/SOAP/Soap.js"></script>
+	<script type="text/javascript" src="../../js/JQ/Datacalculate.js"></script>
 	<script type="text/javascript" src="../../WebSocket/WebSocket.js"></script>
 	<script type="text/javascript" src="http://www.jsons.cn/Down/jquery.json2xml.js"></script>
 	<script type="text/javascript" src="http://www.jsons.cn/Down/jquery.xml2json.js"></script>
@@ -28,7 +29,7 @@
 			    	  <li><a href="../ParameterSet/ParameterSte.html" class = "">设备列表</a></li>
 				  <li><a href="/Bohan/Html/management/management/management.html">设备管理</a></li>
 				  <li><a href="../HistoricalData/HistoricalData.html#_top">所有用电</a></li>
-				  <li><a href="###">个人中心</a></li>
+				  <li><a href="../list/details/details.html">个人中心</a></li>
 			    </ul>
 			    </h2>
 			</section>
@@ -55,7 +56,7 @@
 			</ul>
 		</section>
 		</section>-->
-		<table width="1236" border="5" cellspacing="0" width="30" height="30">
+		<table width="1236" border="5" cellspacing="0" width="50" height="80">
 			<thead id="header">
 				<tr id="section">
 					<th>设备名称</th>
@@ -68,61 +69,67 @@
 	
 <script type="text/javascript">
 	var USERNAME = $.cookie('username'); // 用户id
-//	var Head = '3A'; // 头
-//	var Instruction = '1002'; // 指令
-//	var Name = 'LoadName'; // 名称
-//	var Open = '00'; // 开启
-//	var Shut = '01'; // 关闭
-//	var Tail = '0D'; // 尾
-//	var Toge = USERNAME+";"+Name;// 數據拼接
-//	var arr = Toge.length+1;
-//	console.log(arr);
-//	console.log(Toge);
+	var Head = '3A'; // 头
+	var Instruction = '1002'; // 指令
+	var Name = 'LoadName'; // 名称
+	var Open = '00'; // 开启
+	var Shut = '01'; // 关闭
+	var Tail = '0D'; // 尾
 	var USERTOKEN = $.cookie('userToken');
-	var deviceNameList = RequestByToken(USERTOKEN, "GetLoadNameList");
+	var paramNames = [];
+	var paramValues = [];
+	var deviceNameList = RequestByToken(USERTOKEN, "GetLoadNameList", paramNames, paramValues);
+	
 	window.onload = function() {
 	   var tbody = document.getElementById('sidebox');
+	   //console.log(typeof deviceNameList);
 	   for(var i = 0; i < deviceNameList.length; i++) //遍历json数据
 		{
-//			console.log(deviceNameList[i]);
-			var trow = getDataRow(deviceNameList[i]); //调用方法,返回tr数据
-//			console.log(trow);
+			var trow = getDataRow(deviceNameList[i],i); //调用方法,返回tr数据
 			tbody.appendChild(trow);
 		}
 	}
-
-	function getDataRow(colValue) {
+	
+	function getDataRow(colValue,id) {
 		var row = document.createElement('tr'); //创建行
-		
 		var deviceNameCell = document.createElement('td'); //创建第一列，对应deviceName
-//		deviceNameCell.innerHTML =  colValue; //填充数据
-         deviceNameCell.innerHTML = "<a href='###'>"+colValue+"</a>";
-			
-		row.appendChild(deviceNameCell); //加入行
-
+         deviceNameCell.innerHTML = "<a href=\"../list/details/details.html?colValue="+colValue+"\">"+colValue+"</a>"; //填充数据
+         row.appendChild(deviceNameCell); //加入行
+         
+          
 		//每行添加全开/全关按钮
 		var oprCell = document.createElement('td'); //创建操作列
 		row.appendChild(oprCell);
 		var btnOpenAll = document.createElement('input'); //创建一个input控件
-		btnOpenAll.setAttribute('type', 'button','name');
+		btnOpenAll.setAttribute('type', 'button');
 		btnOpenAll.setAttribute('value', ' 全开 ');
 			
 		var btnCloseAll = document.createElement('input'); //创建一个input控件
 	    btnCloseAll.setAttribute('type','button'); 
 	    btnCloseAll.setAttribute('value','全关'); 
-	        
+	    
+	   var Toge = USERNAME+";"+Name+";"+colValue+";"+Open;// 數據拼接
+	    var strS = Toge.length; //getBLen(Toge);
+	    
+//	    console.log(Strin,strS);
 		//event
-		btnOpenAll.onclick = function() {
-		if(confirm("确定全开吗？")) 
-		  {
-			console.log(USERNAME);
-             CreateWS("3A1002003113632965389;LoadName;墙壁插座10A;000D");
-	    }
+   btnOpenAll.onclick = function() {
+		if(confirm("确定全开吗？")) //这里应该判断设备的状态是开还是关，是开，就提示全关；是关，就提示全开
+		   {
+		   	var All = Head+Instruction+"00"+strS+USERNAME+";"+Name+";"+colValue+";"+Open+Tail;
+		   	console.log(colValue);
+             CreateWS(All);
+//           CreateWS("E7 671708170756 0013 0001 00 0E0D");
+           }
 	}
-	    btnCloseAll.onclick = function() {
+		
+		
+	btnCloseAll.onclick = function() {
 		if(confirm("确定全关吗？")) //这里应该判断设备的状态是开还是关，是开，就提示全关；是关，就提示全开
 		   {
-		   	CreateWS("3A1002003113632965389;LoadName;墙壁插座10A;010D");
+//		   	console.log(colValue,id);
+            var All = Head+Instruction+"00"+strS+USERNAME+";"+Name+";"+colValue+";"+Shut+Tail;
+             CreateWS(All);
 			}
 			}
 			oprCell.appendChild(btnOpenAll);
