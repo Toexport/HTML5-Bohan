@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="../../css/listCss/list.css"/>
-		<title>伯瀚智能用电平台管理系统</title>
-	</head>
+ <head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="../../css/listCss/list.css" />
+	<title>伯瀚智能用电平台管理系统</title>
+</head>
+	
+	<script type="text/javascript" src="../../js/JQ/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../js/JQ/jquery.magnific-popup.js"></script>
+	<script type="text/javascript" src="../../js/JQ/jquery.cookie.js"></script>
+	
+	<script type="text/javascript" src="../../js/SOAP/Soap.js"></script>
+	<script type="text/javascript" src="../../WebSocket/WebSocket.js"></script>
+	<script type="text/javascript" src="http://www.jsons.cn/Down/jquery.json2xml.js"></script>
+	<script type="text/javascript" src="http://www.jsons.cn/Down/jquery.xml2json.js"></script>
 	<body>
 		<nav id="nav">
 			<section>
 				<h1>伯瀚智能</h1>
-			    <ul>
-				   <li><a>伯瀚智能用电平台</a></li>
-			    </ul> 
-			    <h2>
+				<ul>
+					<li>
+						<a>伯瀚智能用电平台</a>
+					</li>
+				</ul>
+				<h2>
 			    <ul>
 			    	  <li><a href="../ParameterSet/ParameterSte.html" class = "">设备列表</a></li>
-				  <li><a href="../RealTimeParam/RealTimeParam.html">设备管理</a></li>
+				  <li><a href="/Bohan/Html/management/management/management.html">设备管理</a></li>
 				  <li><a href="../HistoricalData/HistoricalData.html#_top">所有用电</a></li>
 				  <li><a href="###">个人中心</a></li>
 			    </ul>
@@ -23,31 +34,100 @@
 			</section>
 		</nav>
 		<header id="header">
-			 <section>
-			 	<ul>
-			 		<li><a>设备名称</a></li>
-			 		<li><a>全开 / 全关</a></li>
-			 		</ul>
-			 </section>
+			<!--<section>
+				<ul>
+					<li>
+						<a>设备名称</a>
+					</li>
+					<li>
+						<a>全开 / 全关</a>
+					</li>
+				</ul>
+			</section>-->
 		</header>
-		<section id="section">
+		<!--<section id="section">
 			<section>
 			<ul>
-				<li><a id="sidebox">走廊</a></li>
+				<li><a id="sidebox" class="sidebox">走廊</a></li>
 				<li><a class="sidebox"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button"  style=background-color:red;>全关</button></a></li>
-					 <!--<input type="submit" onclick="RequestByToken()" value="TEST">-->
+					 <button type="button" style=background-color:red;>全关</button></a></li>
 					 <input type="submit" onclick="WebSocketTest()" value="WebSocket" /> 
 			</ul>
 		</section>
-		</section>
+		</section>-->
+		<table width="1236" border="5" cellspacing="0" width="30" height="30">
+			<thead id="header">
+				<tr id="section">
+					<th>设备名称</th>
+					<th>全开 / 全关</th>
+				</tr>
+			</thead>
+			<tbody id="sidebox"></tbody>
+		</table>
 	</body>
-	<script type="text/javascript" src="../../js/JQ/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="../../js/JQ/jquery.magnific-popup.js"></script>
-	<script type="text/javascript" src="../../js/JQ/jquery.cookie.js"></script>
 	
-    <script type="text/javascript" src="../../js/list/list .js"></script>
-    <script type="text/javascript" src="../../WebSocket/WebSocket.js"></script>
-    <script type="text/javascript" src="http://www.jsons.cn/Down/jquery.json2xml.js"></script>
-    <script type="text/javascript" src="http://www.jsons.cn/Down/jquery.xml2json.js"></script>
+<script type="text/javascript">
+	var USERNAME = $.cookie('username'); // 用户id
+//	var Head = '3A'; // 头
+//	var Instruction = '1002'; // 指令
+//	var Name = 'LoadName'; // 名称
+//	var Open = '00'; // 开启
+//	var Shut = '01'; // 关闭
+//	var Tail = '0D'; // 尾
+//	var Toge = USERNAME+";"+Name;// 數據拼接
+//	var arr = Toge.length+1;
+//	console.log(arr);
+//	console.log(Toge);
+	var USERTOKEN = $.cookie('userToken');
+	var deviceNameList = RequestByToken(USERTOKEN, "GetLoadNameList");
+	window.onload = function() {
+	   var tbody = document.getElementById('sidebox');
+	   for(var i = 0; i < deviceNameList.length; i++) //遍历json数据
+		{
+//			console.log(deviceNameList[i]);
+			var trow = getDataRow(deviceNameList[i]); //调用方法,返回tr数据
+//			console.log(trow);
+			tbody.appendChild(trow);
+		}
+	}
+
+	function getDataRow(colValue) {
+		var row = document.createElement('tr'); //创建行
+		
+		var deviceNameCell = document.createElement('td'); //创建第一列，对应deviceName
+//		deviceNameCell.innerHTML =  colValue; //填充数据
+         deviceNameCell.innerHTML = "<a href='###'>"+colValue+"</a>";
+			
+		row.appendChild(deviceNameCell); //加入行
+
+		//每行添加全开/全关按钮
+		var oprCell = document.createElement('td'); //创建操作列
+		row.appendChild(oprCell);
+		var btnOpenAll = document.createElement('input'); //创建一个input控件
+		btnOpenAll.setAttribute('type', 'button','name');
+		btnOpenAll.setAttribute('value', ' 全开 ');
+			
+		var btnCloseAll = document.createElement('input'); //创建一个input控件
+	    btnCloseAll.setAttribute('type','button'); 
+	    btnCloseAll.setAttribute('value','全关'); 
+	        
+		//event
+		btnOpenAll.onclick = function() {
+		if(confirm("确定全开吗？")) 
+		  {
+			console.log(USERNAME);
+             CreateWS("3A1002003113632965389;LoadName;墙壁插座10A;000D");
+	    }
+	}
+	    btnCloseAll.onclick = function() {
+		if(confirm("确定全关吗？")) //这里应该判断设备的状态是开还是关，是开，就提示全关；是关，就提示全开
+		   {
+		   	CreateWS("3A1002003113632965389;LoadName;墙壁插座10A;010D");
+			}
+			}
+			oprCell.appendChild(btnOpenAll);
+			oprCell.appendChild(btnCloseAll);
+			return row;//返回tr数据	 
+	}
+	</script>
 </html>

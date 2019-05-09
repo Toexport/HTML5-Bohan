@@ -1661,6 +1661,7 @@ a.weui-media-box:active{
   -webkit-flex:1;
           flex:1;
 }*/
+
 .weui-dialog{
   position:fixed;
   z-index:5000;

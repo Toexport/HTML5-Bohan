@@ -20,12 +20,13 @@ function LoginFunction(){
 	         dataType: "xml",
 	         timeout: 1000,      //设定超时
 	         cache: false,       //禁用缓存
-	         
 	        success : function(data) 
 	        {
 				data = $.xml2json(data); // xml转json
 				var strData = data;
 				var str = strData.substring(); //获取指定的字符
+//				console.log(name);
+				
 				console.log(str);
 				var obj = JSON.parse(str);
 //				var code = obj.statusCode;
@@ -41,6 +42,8 @@ function LoginFunction(){
 							console.log(obj.message);
 							var content = obj.content; // Token
 							console.log(content);
+							console.log(name);
+							$.cookie('username', name, {expires: 0.1, path:'/'});
 							$.cookie('userToken', content, {expires: 0.1, path:'/'});
 //							window.location.href = "/Bohan/Html/list/list%20.html?content=" + content;
                             window.location.href = "/Bohan/Html/list/list%20.html";

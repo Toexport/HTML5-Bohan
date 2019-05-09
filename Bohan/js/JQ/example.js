@@ -172,19 +172,19 @@ $(function () {
             return this;
         };
     }
-    function preload(){
-        $(window).on("load", function(){
-            var imgList = [
-                "./images/layers/content.png",
-                "./images/layers/navigation.png",
-                "./images/layers/popout.png",
-                "./images/layers/transparent.gif"
-            ];
-            for (var i = 0, len = imgList.length; i < len; ++i) {
-                new Image().src = imgList[i];
-            }
-        });
-    }
+//  function preload(){
+//      $(window).on("load", function(){
+//          var imgList = [
+//              "./images/layers/content.png",
+//              "./images/layers/navigation.png",
+//              "./images/layers/popout.png",
+//              "./images/layers/transparent.gif"
+//          ];
+//          for (var i = 0, len = imgList.length; i < len; ++i) {
+//              new Image().src = imgList[i];
+//          }
+//      });
+//  }
     function androidInputBugFix(){
         // .container 设置了 overflow 属性, 导致 Android 手机下输入框获取焦点时, 输入法挡住输入框的 bug
         // 相关 issue: https://github.com/weui/weui/issues/15
@@ -201,53 +201,6 @@ $(function () {
                 }
             })
         }
-    }
-    function setJSAPI(){
-        var option = {
-            title: 'WeUI, 为微信 Web 服务量身设计',
-            desc: 'WeUI, 为微信 Web 服务量身设计',
-            link: "https://weui.io",
-            imgUrl: 'https://mmbiz.qpic.cn/mmemoticon/ajNVdqHZLLA16apETUPXh9Q5GLpSic7lGuiaic0jqMt4UY8P4KHSBpEWgM7uMlbxxnVR7596b3NPjUfwg7cFbfCtA/0'
-        };
-
-        $.getJSON('https://weui.io/api/sign?url=' + encodeURIComponent(location.href.split('#')[0]), function (res) {
-            wx.config({
-                beta: true,
-                debug: false,
-                appId: res.appid,
-                timestamp: res.timestamp,
-                nonceStr: res.nonceStr,
-                signature: res.signature,
-                jsApiList: [
-                    'onMenuShareTimeline',
-                    'onMenuShareAppMessage',
-                    'onMenuShareQQ',
-                    'onMenuShareWeibo',
-                    'onMenuShareQZone',
-                    // 'setNavigationBarColor',
-                    'setBounceBackground'
-                ]
-            });
-            wx.ready(function () {
-                /*
-                 wx.invoke('setNavigationBarColor', {
-                 color: '#F8F8F8'
-                 });
-                 */
-                wx.invoke('setBounceBackground', {
-                    'backgroundColor': '#F8F8F8',
-                    'footerBounceColor' : '#F8F8F8'
-                });
-                wx.onMenuShareTimeline(option);
-                wx.onMenuShareQQ(option);
-                wx.onMenuShareAppMessage({
-                    title: 'WeUI',
-                    desc: '为微信 Web 服务量身设计',
-                    link: location.href,
-                    imgUrl: 'https://mmbiz.qpic.cn/mmemoticon/ajNVdqHZLLA16apETUPXh9Q5GLpSic7lGuiaic0jqMt4UY8P4KHSBpEWgM7uMlbxxnVR7596b3NPjUfwg7cFbfCtA/0'
-                });
-            });
-        });
     }
     function setPageManager(){
         var pages = {}, tpls = $('script[type="text/html"]');
@@ -280,12 +233,15 @@ $(function () {
             .setDefault('home')
             .init();
     }
+//GetUserDeviceList 
+
+
+
 
     function init(){
-        preload();
+//      preload();
         fastClick();
         androidInputBugFix();
-        setJSAPI();
         setPageManager();
 
         window.pageManager = pageManager;
