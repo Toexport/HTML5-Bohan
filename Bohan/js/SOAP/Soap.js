@@ -72,11 +72,9 @@ $.ajax({
             {
             	  //console.log(Str.length);
             	  for(var key in Str) {
-            	  	 console.log(Str[key]);
+//          	  	 console.log(Str[key]);
             	  	 Arr.push(Str[key]);
            	  }
-            	  
-
             } 
             else
             {
@@ -98,4 +96,25 @@ $.ajax({
 });
 
 return Arr;
+}
+
+function CaculateCS (AData) {
+	var cs = -1;
+	var len = AData.length/2;
+	//console.log(len);
+	var tempStr = '';
+	var tempCS = 0;
+	var tempInt = 0;
+	if (AData.length % 2 == 0) {
+		cs = 0;
+		for (i = 0; i < len; i++) {
+			tempStr = AData.substring(2*i, 2*(i+1));
+			//console.log(tempStr);
+			tempInt = parseInt(tempStr, 16);
+			//console.log('>>>>>>>>'+tempInt);
+			cs = cs + tempInt;
+		}
+		cs = cs & 255; //取低位1个字节
+	}
+	return cs;
 }

@@ -3,15 +3,18 @@
  <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="../../../css/listCss/list.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/honeySwitch.css">
 	<title>伯瀚智能用电平台管理系统</title>
 </head>
 	
 	<script type="text/javascript" src="../../../js/JQ/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/JQ/jquery.js"></script>>
 	<script type="text/javascript" src="../../../js/JQ/jquery.magnific-popup.js"></script>
 	<script type="text/javascript" src="../../../js/JQ/jquery.cookie.js"></script>
 	
 	<script type="text/javascript" src="../../../js/SOAP/Soap.js"></script>
 	<script type="text/javascript" src="../../../js/JQ/Datacalculate.js"></script>
+	<script type="text/javascript" src="../../../js/JQ/honeySwitch.js"></script>
 	<script type="text/javascript" src="../../../WebSocket/WebSocket.js"></script>
 	<script type="text/javascript" src="http://www.jsons.cn/Down/jquery.json2xml.js"></script>
 	<script type="text/javascript" src="http://www.jsons.cn/Down/jquery.xml2json.js"></script>
@@ -26,8 +29,7 @@
 				</ul>
 			</section>
 		</nav>
-		<header id="header">
-		</header>
+		<header id="header"></header>
 		<table width="1236" border="5" cellspacing="0" width="50" height="30">
 			<thead id="header">
 				<tr id="section">
@@ -35,56 +37,176 @@
 					<th>设备编号</th>
 					<th>设备类型</th>
 					<th>设备位置</th>
-					<th>设备状态</th>
+					<th>在线状态</th>
+					<th>功    率</th>
 					<th>开 / 关</th>
 				</tr>
 			</thead>
 			<tbody id="tbDeviceNameList"></tbody>
 		</table>
 	</body>
+	<!--<div class="common-row">
+		<div class="cell-right"><span class="switch-off" id="bluetooth"></span></div>
+	</div>-->
 	
 <script type="text/javascript">
+	var Head; // 头
+	var Instruction; // 指令
+	var Tail = '0D'; // 尾
 	var USERNAME = $.cookie('username'); // 用户id
 	var USERTOKEN = $.cookie('userToken');
 	var paramNames = ['PosName','LoadName'];
 	console.log(GetQueryString('colValue'));
 	var paramValues = ['', GetQueryString('colValue')];
 	var deviceNameList = RequestByToken(USERTOKEN, "GetUserDeviceList", paramNames, paramValues);
-	
+	console.log('deviceNameList.length>>>>>>'+ deviceNameList.length);
+	var Arr = [];
+	var tbody = document.getElementById('tbDeviceNameList');
 	window.onload = function() {
-	   var tbody = document.getElementById('tbDeviceNameList');
-	   for(var i = 0; i < deviceNameList.length; i++) //遍历json数据
-		{
-			console.log(deviceNameList[i]);
-			var trow = getDataRow(deviceNameList[i],i); //调用方法,返回tr数据
-//			console.log(trow);
-			tbody.appendChild(trow);
+	    var len = USERNAME.length; 
+	    Head = '3A'; // 头
+		Instruction = '1001'; // 指令
+        var All = Head+Instruction+"00"+len+USERNAME+Tail;// 數據拼接
+         ws = CreateWS(All);
+         
+         ws.onmessage = function(evt) {
+			var received_msg = evt.data;
+			console.log(received_msg);
+			var obj = JSON.parse(received_msg);// 数据转换JSON
+            Str = obj.content;
+            Arr = Str.split(',');
+            var onLineState = '';
+            var power = '';
+			for(var i = 0; i < deviceNameList.length; i++) //遍历json数据
+			{
+                
+                var DeviceID = deviceNameList[i].id;
+//              if (i == 9)  
+//					console.log(deviceNameList[i]);
+				//console.log(Arr.length);
+                for(var j = 0; j < Arr.length; j++){
+         
+	                var SctDeviceID = Arr[j].substring(0, 12);
+	                //console.log(Arr[j].substring(12, 14));
+	                var switchStatus;
+	                if (Arr[j].substring(12, 14) == '00')
+	                		switchStatus = '开';
+	                	else 
+	                	    switchStatus = '关';
+	                //console.log(SctDeviceID);
+					if(DeviceID == SctDeviceID) {
+						onLineState = '在线';
+				
+			            power = parseInt(Arr[j].substring(16,20)).toString();
+			            power = power + '.'+ Arr[j].substring(20,22)+' V';
+						break;
+					} else {
+						onLineState = '离线';
+						power = '0.00'+" V";
+					}
+					
+				}
+			    
+				var trow = getDataRow(deviceNameList[i], onLineState, power, switchStatus);//调用方法,返回tr数据
+				tbody.appendChild(trow);
 			}
-			}
+		}
+	}
+	
 
-			function getDataRow(colValue, Aid) {
-				console.log(colValue.id);
-
+	function getDataRow(colValue, AonLineState, APower, AswitchStatus) {
+		
 		var row = document.createElement('tr'); //创建行
 		var deviceNameCell = document.createElement('td'); //创建第1列
 		deviceNameCell.innerText = colValue.name;
         row.appendChild(deviceNameCell); //加入行
         
-		 var deviceNameCell2 = document.createElement('td'); //创建第2列
+		var deviceNameCell2 = document.createElement('td'); //创建第2列
 		deviceNameCell2.innerText = colValue.id;
         row.appendChild(deviceNameCell2); //加入行
         
-		 var deviceNameCell3 = document.createElement('td'); //创建第3列
+		var deviceNameCell3 = document.createElement('td'); //创建第3列
 		deviceNameCell3.innerText = colValue.type;
         row.appendChild(deviceNameCell3); //加入行
         
-        
-		 var deviceNameCell4 = document.createElement('td'); //创建第4列
+		var deviceNameCell4 = document.createElement('td'); //创建第4列
 		deviceNameCell4.innerText = colValue.position;
         row.appendChild(deviceNameCell4); //加入行
-          
-         
-    return row;//返回tr数据	 
+        
+        var deviceNameCell5 = document.createElement('td'); //创建第5列
+		deviceNameCell5.innerText = AonLineState;
+		if (AonLineState == '在线')
+		{
+			deviceNameCell5.style.color = '#007AFF';
+		}
+		else
+		{
+			deviceNameCell5.style.color = '#CE3C39';
+		}	
+        row.appendChild(deviceNameCell5); //加入行
+        
+        var deviceNameCell6 = document.createElement('td'); //创建第6列
+		deviceNameCell6.innerText = APower;
+        row.appendChild(deviceNameCell6); //加入行
+        
+        var deviceNameCell7 = document.createElement('td'); //创建第6列
+        row.appendChild(deviceNameCell7); //加入行
+		var btnOper = document.createElement('input'); //创建一个input控件
+		btnOper.setAttribute('type','button'); 
+		btnOper.setAttribute('value', AswitchStatus); 
+		var reverseSwitchStatus = '打开';
+		var reverseSwitchStatusCode = '00';
+		if (AswitchStatus == '开') {
+		  reverseSwitchStatus = '关闭';
+		  reverseSwitchStatusCode = '01';
+		  if (AonLineState == '在线')
+		  	btnOper.style.color = '#09BB07';
+		 }
+		else {
+		  reverseSwitchStatus = '打开';
+		  reverseSwitchStatusCode = '00';
+		  if (AonLineState == '在线')
+		  	btnOper.style.color = '#CF2D28';
+		 }
+		 if (AonLineState == '在线')
+		{
+//			deviceNameCell5.style.color = '#007AFF';
+			btnOper.disabled = false;
+		}
+		else
+		{
+//			deviceNameCell5.style.color = '#CE3C39';
+			btnOper.disabled = true;
+		}
+        btnOper.onclick = function() {
+			if(confirm("确定"+reverseSwitchStatus+"吗？")) {
+				
+//				CaculateCS('6717081707560013000101'); 
+				Head = 'E7';
+				Instruction = '1003';
+				LengthData = '0001';
+				var DataPplicing = colValue.id + Instruction + LengthData + reverseSwitchStatusCode;
+				console.log(DataPplicing);
+				//reverseSwitchStatusCode
+				
+				var cs = CaculateCS(DataPplicing).toString(16).toUpperCase();
+//				console.log(cs);
+				if (cs.length == 1) {
+					cs = '0' + cs;
+				}
+				DataPplicing = Head + DataPplicing + cs + Tail;
+				console.log(DataPplicing);
+				 ws = CreateWS(DataPplicing);
+				ws.onmessage = function(evt) {
+					console.log('111');
+					var obj = JSON.parse(evt.data); // 数据转换JSON
+					alert(obj.message);
+					
+				}
+			}
+		}
+        deviceNameCell7.appendChild(btnOper);
+		return row;//返回tr数据	 
 	}
 	
 </script>
