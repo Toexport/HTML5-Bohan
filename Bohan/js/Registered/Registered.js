@@ -115,7 +115,7 @@ $.ajax({
               showMsg(obj.message);
               alert(obj.message);
               console.log(obj.message);
-              window.location.href="/Bohan/Html/login/index.html";//指向登录的页面地址
+              window.location.href="../login/index.html";//指向登录的页面地址
              },100);
              }else {
 //               showMsg(obj.message);//显示登录失败的原因

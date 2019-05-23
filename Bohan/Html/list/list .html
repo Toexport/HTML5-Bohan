@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="../../js/JQ/jquery.magnific-popup.js"></script>
 	<script type="text/javascript" src="../../js/JQ/jquery.cookie.js"></script>
 	
-	<script type="text/javascript" src="../../js/SOAP/Soap.js"></script>
+	<script type="text/javascript" src="../../js/GlobalFun/GlobalFun.js"></script>
 	<script type="text/javascript" src="../../js/JQ/Datacalculate.js"></script>
 	<script type="text/javascript" src="../../WebSocket/WebSocket.js"></script>
 	<script type="text/javascript" src="http://www.jsons.cn/Down/jquery.json2xml.js"></script>
@@ -26,36 +26,17 @@
 				</ul>
 				<h2>
 			    <ul>
-			    	  <li><a href="../ParameterSet/ParameterSte.html" class = "">设备列表</a></li>
-				  <li><a href="/Bohan/Html/management/management/management.html">设备管理</a></li>
+			    	<!--href="../ParameterSet/ParameterSte.html"-->
+			    	  <li><a class="active" >设备列表</a></li>
+				  <li><a href="../management/management.html">设备管理</a></li>
 				  <li><a href="../HistoricalData/HistoricalData.html#_top">所有用电</a></li>
-				  <li><a href="../list/details/details.html">个人中心</a></li>
+				  <!--<li><a href="../list/details/details.html">个人中心</a></li>-->
 			    </ul>
 			    </h2>
 			</section>
 		</nav>
 		<header id="header">
-			<!--<section>
-				<ul>
-					<li>
-						<a>设备名称</a>
-					</li>
-					<li>
-						<a>全开 / 全关</a>
-					</li>
-				</ul>
-			</section>-->
 		</header>
-		<!--<section id="section">
-			<section>
-			<ul>
-				<li><a id="sidebox" class="sidebox">走廊</a></li>
-				<li><a class="sidebox"><button type="button" style=background-color:green;>全开</button>
-					 <button type="button" style=background-color:red;>全关</button></a></li>
-					 <input type="submit" onclick="WebSocketTest()" value="WebSocket" /> 
-			</ul>
-		</section>
-		</section>-->
 		<table width="1236" border="5" cellspacing="0" width="50" height="80">
 			<thead id="header">
 				<tr id="section">
@@ -63,7 +44,7 @@
 					<th>全开 / 全关</th>
 				</tr>
 			</thead>
-			<tbody id="sidebox"></tbody>
+			<tbody id="sidebox" style="text-align:center;vertical-align:middle;"></tbody>
 		</table>
 	</body>
 	
@@ -102,10 +83,12 @@
 			row.appendChild(oprCell);
 			var btnOpenAll = document.createElement('input'); //创建一个input控件
 			btnOpenAll.setAttribute('type', 'button');
+			btnOpenAll.style = "width: 65px; height: 35px;margin: 0 10px; background-color:#00CD00";
 			btnOpenAll.setAttribute('value', ' 全开 ');
 				
 			var btnCloseAll = document.createElement('input'); //创建一个input控件
 		    btnCloseAll.setAttribute('type','button'); 
+		    btnCloseAll.style = "width: 65px; height: 35px; margin: 0 10px; background-color:#CD0000";
 		    btnCloseAll.setAttribute('value','全关'); 
 		    
 		    var Toge = USERNAME+";"+Name+";"+colValue+";"+Open;// 數據拼接

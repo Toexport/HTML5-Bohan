@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-body,h1,h2,ul {
+body,h1,h2,h3,ul {
 	margin: 0;
 	padding: 0;
 }
@@ -8,11 +8,13 @@ body,h1,h2,ul {
 ul {
 	list-style: outside none none;
 }
+input {
+	list-style: outside none none;
+}
 
  a { 
 	text-decoration: none;
 }
-
 button {
 	width: 85px;
 	height: 30px;
@@ -28,7 +30,7 @@ button {
  #header {
  	min-width: 1263px;
  	width: 100%;
- 	height: 50px; 
+ 	height: 55px; 
  	background-color: #1E9FFF;
  }
  
@@ -96,16 +98,17 @@ button {
 	color: #EEEEEE;
 	float: right;
 }
-
-#header >section >ul {
-	width: 1263px;
-	height: 50px;
-	line-height: 50px;
-	/*color: #EEEEEE;*/
-	color: #000000;
-	background-color: #F5F5FF;
+#nav >div {
+	/*width: 62.5%;*/
+	width: 65%;
+	/*background-color: red;*/
+	height: 55px ;
+	line-height: 51px;
+	font-size: 10px; // 字体大小
+	color: #EEEEEE;
 	float: right;
 }
+
 
  #section >section >ul {
  	width: 1263px;
@@ -123,6 +126,17 @@ button {
 }
 
 #nav >section >h2 >ul >li {
+	width: 155px;
+	text-align: center;
+	float: left;
+}
+/*#nav >div >select> {
+	width: 150px;
+	text-align: center;
+	float: left;
+}*/
+
+#header >section >ul {
 	width: 150px;
 	text-align: center;
 	float: left;
@@ -158,6 +172,10 @@ button {
 	color: #EEEEEE;
 	display: block;
 }
+#nav >section >h2 >ul >li >a {
+	color: #EEEEEE;
+	display: block;
+}
 
 #header >section >ul >li >a {
 	/*color: #EEEEEE;*/
@@ -172,11 +190,14 @@ button {
 }
 
 
-/*#nav >section >ul >li >a:hover {
+#nav >section >ul >li >a:hover {
 	background-color: #000000;
-}*/
+}
 #nav >section >h2 >ul >li >a:hover {
-	background-color: #F53994;
+	background-color: #000000;
+}
+#nav >section >h3 >ul >li >a:hover {
+	background-color: #000000;
 }
 
 /*#header >section > ul >li >a:hover {

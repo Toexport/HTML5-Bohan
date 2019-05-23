@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+ <head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="../../css/managementCss/managementCss.css" />
+	<title>伯瀚智能用电平台管理系统</title>
+</head>
+	
+	<script type="text/javascript" src="../../js/JQ/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../js/JQ/jquery.magnific-popup.js"></script>
+	<script type="text/javascript" src="../../js/JQ/jquery.cookie.js"></script>
+	
+	<script type="text/javascript" src="../../js/GlobalFun/GlobalFun.js"></script>
+	<script type="text/javascript" src="../../js/JQ/Datacalculate.js"></script>
+	<script type="text/javascript" src="../../WebSocket/WebSocket.js"></script>
+	<script type="text/javascript" src="http://www.jsons.cn/Down/jquery.json2xml.js"></script>
+	<script type="text/javascript" src="http://www.jsons.cn/Down/jquery.xml2json.js"></script>
+	<body>
+		<nav id="nav">
+			<section>
+				<h1>伯瀚智能</h1>
+				<ul>
+					<li>
+						<a>伯瀚智能用电平台</a>
+					</li>
+				</ul>
+				<h2>
+			    <ul>
+				  <li><a>设备管理</a></li>
+			    </ul>
+			    </h2>
+			</section>
+		</nav>
+		<header id="header">
+		</header>
+		<table width="1236" border="5" cellspacing="0" width="50" height="80">
+			<thead id="header">
+				<tr id="section">
+					<th>设备名称</th>
+					<th>设备位置</th>
+					<th>设备 ID</th>
+					<th>设备类型</th>
+				</tr>
+			</thead>
+			<tbody id="sidebox" style="text-align:center;vertical-align:middle;"></tbody>
+		</table>
+	</body>
+	
+	<script type="text/javascript">
+		var USERTOKEN = $.cookie('userToken');
+		var paramNames = [];
+		var paramValues = [];
+		var DeviceList = RequestByToken(USERTOKEN, "GetUserDeviceList", paramNames, paramValues);
+		console.log(DeviceList);
+		window.onload = function() {
+		   var tbody = document.getElementById('sidebox');
+		   for(var i = 0; i < DeviceList.length; i++) //遍历json数据
+			{
+				var trow = getDataRow(DeviceList[i],i); //调用方法,返回tr数据
+				tbody.appendChild(trow);
+			}
+		}
+		function getDataRow(colValue,id) {
+			var row = document.createElement('tr'); //创建行
+			var deviceNameCell = document.createElement('td'); //创建第1列
+			deviceNameCell.innerText = colValue.name;
+        		row.appendChild(deviceNameCell); //加入行
+	         
+	         var deviceNameCell2 = document.createElement('td'); //创建第2列
+			deviceNameCell2.innerText = colValue.position;
+        		row.appendChild(deviceNameCell2); //加入行
+        		
+        		var deviceNameCell3 = document.createElement('td'); //创建第3列
+			deviceNameCell3.innerText = colValue.id;
+        		row.appendChild(deviceNameCell3); //加入行
+        
+			var deviceNameCell4 = document.createElement('td'); //创建第4列
+			deviceNameCell4.innerText = colValue.type;
+        		row.appendChild(deviceNameCell4); //加入行
+        		
+			return row;//返回tr数据	 
+		}
+	</script>
+</html>

@@ -8,11 +8,10 @@
 </head>
 	
 	<script type="text/javascript" src="../../../js/JQ/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="../../../js/JQ/jquery.js"></script>>
 	<script type="text/javascript" src="../../../js/JQ/jquery.magnific-popup.js"></script>
 	<script type="text/javascript" src="../../../js/JQ/jquery.cookie.js"></script>
 	
-	<script type="text/javascript" src="../../../js/SOAP/Soap.js"></script>
+	<script type="text/javascript" src="../../../js/GlobalFun/GlobalFun.js"></script>
 	<script type="text/javascript" src="../../../js/JQ/Datacalculate.js"></script>
 	<script type="text/javascript" src="../../../js/JQ/honeySwitch.js"></script>
 	<script type="text/javascript" src="../../../WebSocket/WebSocket.js"></script>
@@ -27,6 +26,11 @@
 						<a>伯瀚智能用电平台</a>
 					</li>
 				</ul>
+				<h2>
+			    <ul>
+				  <li><a>设备列表</a></li>
+			    </ul>
+			    </h2>
 			</section>
 		</nav>
 		<header id="header"></header>
@@ -38,16 +42,22 @@
 					<th>设备类型</th>
 					<th>设备位置</th>
 					<th>在线状态</th>
-					<th>功    率</th>
+					<th>电     压</th>
+					<th>电     流</th>
+					<th>功     率</th>
+					<th>功率因素</th>
+					<th>累计用电量</th>
+					<th>总用电金额</th>
+					<th>设备温度</th>
 					<th>开 / 关</th>
 				</tr>
 			</thead>
-			<tbody id="tbDeviceNameList"></tbody>
+			<tbody id="tbDeviceNameList" style="text-align:center;vertical-align:middle;"></tbody>
 		</table>
 	</body>
-	<!--<div class="common-row">
-		<div class="cell-right"><span class="switch-off" id="bluetooth"></span></div>
-	</div>-->
+	<!--<div class="common-row">-->
+		<!--<div class="cell-right"><span class="switch-off" id="bluetooth"></span></div>-->
+	<!--</div>-->
 	
 <script type="text/javascript">
 	var Head; // 头
@@ -56,66 +66,92 @@
 	var USERNAME = $.cookie('username'); // 用户id
 	var USERTOKEN = $.cookie('userToken');
 	var paramNames = ['PosName','LoadName'];
-	console.log(GetQueryString('colValue'));
 	var paramValues = ['', GetQueryString('colValue')];
 	var deviceNameList = RequestByToken(USERTOKEN, "GetUserDeviceList", paramNames, paramValues);
-	console.log('deviceNameList.length>>>>>>'+ deviceNameList.length);
+	
 	var Arr = [];
 	var tbody = document.getElementById('tbDeviceNameList');
 	window.onload = function() {
 	    var len = USERNAME.length; 
 	    Head = '3A'; // 头
 		Instruction = '1001'; // 指令
+		QueryElectricityParameters = '0001';//查询用电参数指令
         var All = Head+Instruction+"00"+len+USERNAME+Tail;// 數據拼接
+        var Temperature = '';
          ws = CreateWS(All);
-         
          ws.onmessage = function(evt) {
 			var received_msg = evt.data;
 			console.log(received_msg);
 			var obj = JSON.parse(received_msg);// 数据转换JSON
+			console.log(obj);
             Str = obj.content;
+            console.log(Str);
             Arr = Str.split(',');
             var onLineState = '';
             var power = '';
+            
 			for(var i = 0; i < deviceNameList.length; i++) //遍历json数据
 			{
-                
                 var DeviceID = deviceNameList[i].id;
-//              if (i == 9)  
-//					console.log(deviceNameList[i]);
-				//console.log(Arr.length);
+                console.log(DeviceID);
                 for(var j = 0; j < Arr.length; j++){
-         
 	                var SctDeviceID = Arr[j].substring(0, 12);
-	                //console.log(Arr[j].substring(12, 14));
 	                var switchStatus;
-	                if (Arr[j].substring(12, 14) == '00')
+	                if (Arr[j].substring(12, 14) == '00') {
 	                		switchStatus = '开';
-	                	else 
+	                } else {
 	                	    switchStatus = '关';
 	                //console.log(SctDeviceID);
+	                }
 					if(DeviceID == SctDeviceID) {
 						onLineState = '在线';
-				
+						
+						var HeadSecond = 'E7';
+						var InstructionSecond = '0001';
+						var TailSecond = '0D'; // 尾
+						var Al = DeviceID+InstructionSecond+'0000';
+						var Cs = CaculateCS(Al).toString(16).toUpperCase();
+						var ALt = HeadSecond+DeviceID+InstructionSecond+'0000'+Cs+TailSecond;
+						ws = CreateWS(ALt);
+						ws.onmessage = function(evt) {
+						var received_msg = evt.data;
+						var obj = JSON.parse(received_msg);// 数据转换JSON
+//						console.log(obj);
+						Str = obj.content;
+						var Voltage = Str.substring(24, 30); // 电压
+						console.log(Voltage);
+						var Current = Str.substring(30,36);// 电流
+						console.log(Current);
+						var Power = Str.substring(36,42); // 功率
+						console.log(Power);
+						var PowerFactor = Str.substring(42,46); // 功率因素
+						console.log(PowerFactor);
+						var CumulativePower = Str.substring(46,54); // 累计用电
+						console.log(CumulativePower);
+						var TotalElectricityConsumption = Str.substring(62,72)// 用电总金额
+						console.log(TotalElectricityConsumption);
+						Temperature = Str.substring(86,90);// 设备温度
+						console.log(Temperature);
+						}
+						
 			            power = parseInt(Arr[j].substring(16,20)).toString();
 			            power = power + '.'+ Arr[j].substring(20,22)+' V';
 						break;
 					} else {
 						onLineState = '离线';
-						power = '0.00'+" V";
+//						power = '0.00'+" V";
+						power = '';
+						
 					}
-					
 				}
-			    
 				var trow = getDataRow(deviceNameList[i], onLineState, power, switchStatus);//调用方法,返回tr数据
 				tbody.appendChild(trow);
 			}
-		}
+		}  
 	}
 	
-
 	function getDataRow(colValue, AonLineState, APower, AswitchStatus) {
-		
+		console.log(AswitchStatus);
 		var row = document.createElement('tr'); //创建行
 		var deviceNameCell = document.createElement('td'); //创建第1列
 		deviceNameCell.innerText = colValue.name;
@@ -149,10 +185,40 @@
 		deviceNameCell6.innerText = APower;
         row.appendChild(deviceNameCell6); //加入行
         
-        var deviceNameCell7 = document.createElement('td'); //创建第6列
+        var deviceNameCell7 = document.createElement('td'); //创建第7列
+		deviceNameCell7.innerText = 0.00+" A";
         row.appendChild(deviceNameCell7); //加入行
+        
+        var deviceNameCell8 = document.createElement('td'); //创建第8列
+		deviceNameCell8.innerText = 0.00+" W";
+        row.appendChild(deviceNameCell8); //加入行
+        
+        var deviceNameCell9 = document.createElement('td'); //创建第9列
+		deviceNameCell9.innerText = 0.00;
+        row.appendChild(deviceNameCell9); //加入行
+        
+        var deviceNameCell10 = document.createElement('td'); //创建第10列
+        deviceNameCell10.style.color = '#CE3C39';
+		deviceNameCell10.innerText = 36.91+" kWh";
+        row.appendChild(deviceNameCell10); //加入行
+        
+        var deviceNameCell11 = document.createElement('td'); //创建第11列
+		deviceNameCell11.innerText = "￥ "+ 36.91;
+        row.appendChild(deviceNameCell11); //加入行
+        
+         var deviceNameCell12 = document.createElement('td'); //创建第12列
+		deviceNameCell12.innerText = 31.30 +" °C";
+        row.appendChild(deviceNameCell12); //加入行
+        
+        var deviceNameCell13 = document.createElement('td'); //创建第13列
+        row.appendChild(deviceNameCell13); //加入行
 		var btnOper = document.createElement('input'); //创建一个input控件
+		for (var i = 0;i < 3; i ++) {
+			
+		}
 		btnOper.setAttribute('type','button'); 
+		btnOper.style = "width: 35px; height: 22px;margin: 0 10px;";
+		
 		btnOper.setAttribute('value', AswitchStatus); 
 		var reverseSwitchStatus = '打开';
 		var reverseSwitchStatusCode = '00';
@@ -177,17 +243,18 @@
 		{
 //			deviceNameCell5.style.color = '#CE3C39';
 			btnOper.disabled = true;
+			btnOper.style.display = "none";// 设置按钮隐藏
+//			btnOper.hidden = YES;
 		}
         btnOper.onclick = function() {
 			if(confirm("确定"+reverseSwitchStatus+"吗？")) {
 				
 //				CaculateCS('6717081707560013000101'); 
 				Head = 'E7';
-				Instruction = '1003';
+				Instruction = '0013';
 				LengthData = '0001';
 				var DataPplicing = colValue.id + Instruction + LengthData + reverseSwitchStatusCode;
 				console.log(DataPplicing);
-				//reverseSwitchStatusCode
 				
 				var cs = CaculateCS(DataPplicing).toString(16).toUpperCase();
 //				console.log(cs);
@@ -198,14 +265,19 @@
 				console.log(DataPplicing);
 				 ws = CreateWS(DataPplicing);
 				ws.onmessage = function(evt) {
-					console.log('111');
 					var obj = JSON.parse(evt.data); // 数据转换JSON
-					alert(obj.message);
-					
+					console.log(obj);
+					if (obj.statusCode == 0) {
+						alert('操作成功');
+					}else {
+						alert('操作失败');
+					}
 				}
 			}
 		}
-        deviceNameCell7.appendChild(btnOper);
+        deviceNameCell13.appendChild(btnOper);
+//      deviceNameCell13.appendChild(btnOper2);
+//      deviceNameCell13.appendChild(btnOper3);
 		return row;//返回tr数据	 
 	}
 	
