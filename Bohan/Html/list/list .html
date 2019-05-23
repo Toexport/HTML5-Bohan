@@ -26,11 +26,10 @@
 				</ul>
 				<h2>
 			    <ul>
-			    	<!--href="../ParameterSet/ParameterSte.html"-->
 			    	  <li><a class="active" >设备列表</a></li>
 				  <li><a href="../management/management.html">设备管理</a></li>
 				  <li><a href="../HistoricalData/HistoricalData.html#_top">所有用电</a></li>
-				  <!--<li><a href="../list/details/details.html">个人中心</a></li>-->
+				  <li><a href="../My/My.html">个人中心</a></li>
 			    </ul>
 			    </h2>
 			</section>
@@ -39,16 +38,21 @@
 		</header>
 		<table width="1236" border="5" cellspacing="0" width="50" height="80">
 			<thead id="header">
+				<div>
+					<tbody id="Hear" style="color: red;"></tbody>
+				</div>
 				<tr id="section">
 					<th>设备名称</th>
 					<th>全开 / 全关</th>
 				</tr>
+				
 			</thead>
-			<tbody id="sidebox" style="text-align:center;vertical-align:middle;"></tbody>
+			<tbody id="sidebox"  style="text-align:center;vertical-align:middle;"></tbody>
 		</table>
 	</body>
 	
 	<script type="text/javascript">
+		var USERTOKEN = $.cookie('userToken');
 		var USERNAME = $.cookie('username'); // 用户id
 		var Head = '3A'; // 头
 		var Instruction = '1002'; // 指令
@@ -56,14 +60,31 @@
 		var Open = '00'; // 开启
 		var Shut = '01'; // 关闭
 		var Tail = '0D'; // 尾
-		var USERTOKEN = $.cookie('userToken');
+		
+		var d = new Date();
+        var year = d.getFullYear();
+        var month = (d.getMonth()+1).toString().padStart(2,'0');
+        var day = d.getDate().toString().padStart(2,'0');
+		var YYMMDD = year+month+day;
+		var paramNames = ['strYearMonthDay'];
+		var paramValues = [YYMMDD];
+		var DayTotalPowerData = RequestByToken(USERTOKEN, "GetUserDayTotalPowerData", paramNames, paramValues);
+		console.log(DayTotalPowerData);
+	    var totalPowerData = 0.00;
+		for (var i = 0; i < DayTotalPowerData.length; i++) {
+			var All = DayTotalPowerData[i];
+			totalPowerData = totalPowerData + parseFloat(DayTotalPowerData[i].powerData);
+			console.log(totalPowerData);
+			var AllPower = document.getElementById('Hear'); 
+			AllPower.innerHTML = '当天所有用电: ' + totalPowerData.toFixed(2)+' kWh';
+		}
+		
 		var paramNames = [];
 		var paramValues = [];
 		var deviceNameList = RequestByToken(USERTOKEN, "GetLoadNameList", paramNames, paramValues);
 		
 		window.onload = function() {
 		   var tbody = document.getElementById('sidebox');
-		   //console.log(typeof deviceNameList);
 		   for(var i = 0; i < deviceNameList.length; i++) //遍历json数据
 			{
 				var trow = getDataRow(deviceNameList[i],i); //调用方法,返回tr数据
@@ -76,7 +97,6 @@
 			var deviceNameCell = document.createElement('td'); //创建第一列，对应deviceName
 	         deviceNameCell.innerHTML = "<a href=\"../list/details/details.html?colValue="+colValue+"\">"+colValue+"</a>"; //填充数据
 	         row.appendChild(deviceNameCell); //加入行
-	         
 	          
 			//每行添加全开/全关按钮
 			var oprCell = document.createElement('td'); //创建操作列

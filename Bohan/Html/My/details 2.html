@@ -42,13 +42,13 @@
 					<th>设备类型</th>
 					<th>设备位置</th>
 					<th>在线状态</th>
-					<th>电     压 (V)</th>
-					<th>电     流 (A)</th>
-					<th>功     率 (W)</th>
+					<th>电     压</th>
+					<th>电     流</th>
+					<th>功     率</th>
 					<th>功率因素</th>
-					<th>累计用电量 (kWh)</th>
-					<th>总用电金额 (元)</th>
-					<th>设备温度 (°C)</th>
+					<th>累计用电量</th>
+					<th>总用电金额</th>
+					<th>设备温度</th>
 					<th>开 / 关</th>
 				</tr>
 			</thead>
@@ -88,19 +88,18 @@
             console.log(Str);
             Arr = Str.split(',');
             var onLineState = '';
-//          var power = '';
-            var Voltage = '';
-            var Power = '';
-            var Current = '';
-            var PowerFactor = '';
-            var CumulativePower = '';
-            var TotalElectricityConsumption = '';
-            var Temperature = '';
+            var power = '';
+//          var Voltage = '';
+//          var Power = '';
+//          var Current = '';
+//          var PowerFactor = '';
+//          var CumulativePower = '';
+//          var TotalElectricityConsumption = '';
+//          var Temperature = '';
 			for(var i = 0; i < deviceNameList.length; i++) //遍历json数据
 			{
                 var DeviceID = deviceNameList[i].id;
 //              console.log(DeviceID);
-				
                 for(var j = 0; j < Arr.length; j++){
 	                var SctDeviceID = Arr[j].substring(0, 12);
 	                var switchStatus;
@@ -109,29 +108,64 @@
 	                } else {
 	                	    switchStatus = '关';
 	                //console.log(SctDeviceID);
-	               }
-
-	               if(DeviceID == SctDeviceID) {
-	               		onLineState = '在线';
-	               		Voltage = Arr[j].substring(16, 19); // 电压
-	               		Voltage = Voltage + '.' + Arr[j].substring(19, 22);
-	               		Current = parseInt(Arr[j].substring(22, 25)); // 电流
-	               		Current = Current + '.' + Arr[j].substring(25, 28);
-	               		power = parseInt(Arr[j].substring(28, 31)).toString(); // 功率
-	               		power = power + '.' + Arr[j].substring(31, 34);
-	               		PowerFactor = parseInt(Arr[j].substring(34, 35)); // 功率因数
-	               		PowerFactor = PowerFactor + '.' + Arr[j].substring(35, 38);
-	               		CumulativePower = parseInt(Arr[j].substring(40, 44)); // 累计用电
-	               		CumulativePower = CumulativePower + '.' + Arr[j].substring(44, 46);
-	               		TotalElectricityConsumption = parseInt(Arr[j].substring(56, 62)) // 用电总金额
-	               		TotalElectricityConsumption = TotalElectricityConsumption + '.' + Arr[j].substring(62, 64);
-	               		Temperature = parseInt(Arr[j].substring(102, 104)); // 设备温度
-	               		Temperature = Temperature +'.'+Arr[j].substring(104,106);	
+	                }
+	               	 
+					if(DeviceID == SctDeviceID) {
+						onLineState = '在线';
+						
+						var HeadSecond = 'E7';
+					 	var InstructionSecond = '0001';
+						var TailSecond = '0D'; // 尾
+						var Al = DeviceID+InstructionSecond+'0000';
+						var Cs = CaculateCS(Al).toString(16).toUpperCase();
+						var ALt = HeadSecond+DeviceID+InstructionSecond+'0000'+Cs+TailSecond;
+						ws = CreateWS(ALt);
+						
+						 var Voltage = '';
+           				 var Power = '';
+            var Current = '';
+            var PowerFactor = '';
+            var CumulativePower = '';
+            var TotalElectricityConsumption = '';
+            var Temperature = '';
+						ws.onmessage = function(evt) {
+							var received_msg = evt.data;
+							var obj = JSON.parse(received_msg);// 数据转换JSON
+							Str = obj.content;
+						    
+							Voltage = Str.substring(24, 27); // 电压
+							Voltage = Voltage+'.'+Str.substring(27,30)+' V';
+							//console.log(Voltage);
+							//FillData(DeviceID, 5, Voltage);
+							Current = parseInt(Str.substring(30,33));// 电流
+								Current = Current+'.'+Str.substring(33,36)+' A';
+	//							console.log(Current);
+							Power = parseInt(Str.substring(36,40)); // 功率
+							Power = Power+'.'+Str.substring(40,42)+' W';
+	//						console.log(Power);
+							PowerFactor = parseInt(Str.substring(42,43)); // 功率因素
+							PowerFactor = PowerFactor+'.'+Str.substring(43,46);
+	//						console.log(PowerFactor);
+							CumulativePower = parseInt(Str.substring(46,52)); // 累计用电
+							CumulativePower = CumulativePower+'.'+Str.substring(52,54)+' kWh';
+	//						console.log(CumulativePower);
+							TotalElectricityConsumption = parseInt(Str.substring(62,70))// 用电总金额
+							TotalElectricityConsumption = "￥ "+TotalElectricityConsumption+'.'+Str.substring(70,72);
+	//						console.log(TotalElectricityConsumption);
+							Temperature = parseInt(Str.substring(86,88));// 设备温度
+							Temperature = Temperature+'.'+Str.substring(88,90)+' °C';
+	//						console.log(Temperature);
+							var DataArray = new Array(Voltage, Current, Power, PowerFactor, 
+								CumulativePower, TotalElectricityConsumption, Temperature);
+						}
+						
+			            power = parseInt(Arr[j].substring(16,20)).toString();
+			            power = power + '.'+ Arr[j].substring(20,22)+' W';
+			        
 						break;
 					} else {
 						onLineState = '离线';
 //						power = '0.00'+" V";
-						Voltage = '';
 						power = '';
 						Current = '';
 						PowerFactor = '';
@@ -140,6 +174,7 @@
 						Temperature = '';	
 					}
 				}
+                console.log(Voltage);
 				var trow = getDataRow(deviceNameList[i], onLineState, power, switchStatus, Voltage, 
 					Current, PowerFactor, CumulativePower, TotalElectricityConsumption, Temperature);//调用方法,返回tr数据
 				tbody.appendChild(trow);
@@ -147,7 +182,24 @@
 			}
 		}  
 	}
-
+	
+//	function FillData(DeviceID, colIndex, colValue)
+//	{
+//		console.log(DeviceID+'  '+colValue);
+//		var obj = document .getElementById ("tbDeviceNameList");
+//		var TempDeviceID = '';
+//		for (row=1; row< obj.rows.length-1; row++)
+//		{
+//			TempDeviceID = obj.rows[row].cells[1].innerText;
+//      		if (DeviceID == TempDeviceID)
+//      		{
+//      			obj.rows[row].cells[colIndex].innerText = colValue;
+//      		    break;
+//      		}
+//		}
+//		
+//	}
+	
 	function getDataRow(colValue, AonLineState, APower, AswitchStatus,AVoltage,ACurrent,APowerFactor,ACumulativePower,ATotalElectricityConsumption,ATemperature) {
 		var row = document.createElement('tr'); //创建行
 		var deviceNameCell = document.createElement('td'); //创建第1列 设备名称
@@ -210,6 +262,9 @@
         var deviceNameCell13 = document.createElement('td'); //创建第13列 开关
         row.appendChild(deviceNameCell13); //加入行
 		var btnOper = document.createElement('input'); //创建一个input控件
+		for (var i = 0;i < 3; i ++) {
+			
+		}
 		btnOper.setAttribute('type','button'); 
 		btnOper.style = "width: 35px; height: 22px;margin: 0 10px;";
 		
