@@ -20,27 +20,27 @@ button {
 
  #nav {
  	width: 100%;
- 	min-width: 1263px;
+ 	min-width: 100%;
  	height: 70px; 
  	background-color: #333;
  }
  
  #header {
- 	min-width: 1263px;
+ 	min-width: 100%;
  	width: 100%;
  	height: 50px; 
  	background-color: #1E9FFF;
  }
  
  #section {
- 	min-width: 1263px;
+ 	min-width: 100%;
  	width: 100%;
  	height: 45px;
  	background-color: white;
  }
  
 #nav > section {
-	width: 1263px;
+	width: 100%;
 	/*background-color: red;*/
 	height: 70px;
 	margin: 0 auto;
@@ -48,13 +48,13 @@ button {
 
 #header >section {
 	/*background-color: red;*/
-	width: 1263px;
+	width: 100%;
 	height: 50px;
 	margin:0 auto;
 }
  #section >section {
  	/*background-color: red;*/
- 	width: 1263px;
+ 	width: 100%;
  	height: 50px;
  	margin: 0 auto;
  }
@@ -77,28 +77,29 @@ button {
  	float: left;
  }
 
-
+/*导航南文字*/
 #nav >section >ul {
-	width: 50%;
+	width: 60%;
 	/*background-color: red;*/
 	height: 70px ;
 	line-height: 70px;
-	font-size: 15px; // 字体大小
+	font-size: 15px; /** 字体大小*/
 	color: #EEEEEE;
 	float: right;
 }
-#nav >section >h2>ul {
-	width: 65%;
+/* 导航栏按钮*/
+#nav >section >h2>ul { 
+	width: 89%;
 	/*background-color: red;*/
 	height: 55px ;
 	line-height: 51px;
-	font-size: 10px; // 字体大小
+	font-size: 10px; /** 字体大小*/
 	color: #EEEEEE;
 	float: right;
 }
 
 #header >section >ul {
-	width: 1263px;
+	width: 100%;
 	height: 50px;
 	line-height: 50px;
 	/*color: #EEEEEE;*/
@@ -108,7 +109,7 @@ button {
 }
 
  #section >section >ul {
- 	width: 1263px;
+ 	width: 100%;
 	height: 50px;
 	line-height: 50px;
 	color: #EEEEEE;
@@ -117,13 +118,13 @@ button {
  
 
 #nav >section >ul >li {
-	width: 120px;
+	width: 50%;
 	text-align: center;
 	float: left;
 }
 
 #nav >section >h2 >ul >li {
-	width: 150px;
+	width: 22%;
 	text-align: center;
 	float: left;
 }

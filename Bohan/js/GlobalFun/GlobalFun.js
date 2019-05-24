@@ -57,9 +57,9 @@ $.ajax({
 	},
 	success: function(data) {
         	var dataStr = $(data).find(AName+"Result").text();
-        	console.log(dataStr);
+//      	console.log(dataStr);
         var obj = JSON.parse(dataStr);// 数据转换JSON
-          console.log(obj);
+//        console.log(obj);
         var Str = obj.content;
 //      console.log(Str);
 //      console.log(typeof Str);

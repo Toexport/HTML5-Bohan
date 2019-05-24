@@ -2,7 +2,7 @@
 <html lang="zh-cn">
  <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="../../../css/listCss/list.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/listCss/deatils/details.css">
 	<link rel="stylesheet" type="text/css" href="../../../css/honeySwitch.css">
 	<title>伯瀚智能用电平台管理系统</title>
 </head>
@@ -23,7 +23,7 @@
 				<h1>伯瀚智能</h1>
 				<ul>
 					<li>
-						<a>伯瀚智能用电平台</a>
+						<a>伯翰智能用电平台</a>
 					</li>
 				</ul>
 				<h2>
@@ -34,7 +34,7 @@
 			</section>
 		</nav>
 		<header id="header"></header>
-		<table width="1236" border="5" cellspacing="0" width="50" height="30">
+		<table width="90%" border="5" cellspacing="0" width="50" height="80" style="margin:0 auto;">
 			<thead id="header">
 				<tr id="section">
 					<th>设备名称</th>
@@ -75,7 +75,6 @@
 	    var len = USERNAME.length; 
 	    Head = '3A'; // 头
 		Instruction = '1001'; // 指令
-//		QueryElectricityParameters = '0001';//查询用电参数指令
         var All = Head+Instruction+"00"+len+USERNAME+Tail;// 數據拼接
          ws = CreateWS(All);
 //       ws = CreateWS('E768160905006400010000F10D');
@@ -117,8 +116,8 @@
 	               		Voltage = Voltage + '.' + Arr[j].substring(19, 22);
 	               		Current = parseInt(Arr[j].substring(22, 25)); // 电流
 	               		Current = Current + '.' + Arr[j].substring(25, 28);
-	               		power = parseInt(Arr[j].substring(28, 31)).toString(); // 功率
-	               		power = power + '.' + Arr[j].substring(31, 34);
+	               		power = parseInt(Arr[j].substring(28, 32)).toString(); // 功率
+	               		power = power + '.' + Arr[j].substring(32, 34);
 	               		PowerFactor = parseInt(Arr[j].substring(34, 35)); // 功率因数
 	               		PowerFactor = PowerFactor + '.' + Arr[j].substring(35, 38);
 	               		CumulativePower = parseInt(Arr[j].substring(40, 44)); // 累计用电
@@ -263,8 +262,10 @@
 					console.log(obj);
 					if (obj.statusCode == 0) {
 						alert('操作成功');
+						window.location.reload(); 
 					}else {
 						alert('操作失败');
+						window.location.reload(); 
 					}
 				}
 			}

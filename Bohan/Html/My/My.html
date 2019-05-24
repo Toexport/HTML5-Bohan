@@ -1,30 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
- 
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
+<html lang="zh-cn">
+ <head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="../../css/My/My.css">
+	<!--<link rel="stylesheet" type="text/css" href="../../../css/honeySwitch.css">-->
+	<title>个人中心</title>
 </head>
- 
-<body>
-    <div id="click">click</div>
-    <script type="text/javascript">
-    window.onload = function() {
-        var c = document.getElementById("click");
-        var a = 1;
-        c.onclick = function() {
-            if (a==0) {
-                a = 1;
-                alert(a);
-                
-            }
-            else {
-                a = 0;
-                alert(a);
-            }
-        }
-    }
-    </script>
-</body>
- 
+	
+	<script type="text/javascript" src="../../js/JQ/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../js/JQ/jquery.magnific-popup.js"></script>
+	<script type="text/javascript" src="../../js/JQ/jquery.cookie.js"></script>
+	
+	<script type="text/javascript" src="../../js/GlobalFun/GlobalFun.js"></script>
+	<script type="text/javascript" src="../../js/JQ/Datacalculate.js"></script>
+	<script type="text/javascript" src="http://www.jsons.cn/Down/jquery.json2xml.js"></script>
+	<script type="text/javascript" src="http://www.jsons.cn/Down/jquery.xml2json.js"></script>
+	<body>
+		<nav id="nav">
+			<section>
+				<h1>伯瀚智能</h1>
+				<ul>
+					<li>
+						<a>伯瀚智能用电平台</a>
+					</li>
+				</ul>
+				<h2>
+			    <ul>
+				  <li><a>个人中心</a></li>
+			    </ul>
+			    </h2>
+			</section>
+		</nav>
+		<header id="header"></header>
+		<table width="65%" border="1" cellspacing="0" width="50" height="80" style="margin:0 auto;">
+			<thead id="header">
+				<tr id="section">
+					<img src="../../images/logo1024.png" width="20" height="20" style="position:absolute;top:19.5%;left:20%">
+					<th id="Username">111111111</th>
+					<img src="../../images/logo1024.png" width="30" height="30" style="position:absolute;top:19%;left:78%">
+				</tr>
+				<tr id="section">
+					<th>设备名称</th>
+				</tr>
+				<tr id="section">
+					<th>设备名称</th>
+				</tr>
+				<tr id="section">
+					<th>设备名称</th>
+				</tr>
+				<tr id="section">
+					<th>设备名称</th>
+				</tr>
+				<tr id="section">
+					<th>设备名称</th>
+				</tr>
+				<tr id="section">
+					<th>设备名称</th>
+				</tr>
+			</thead>
+			<tbody id="tbDeviceNameList" style="text-align:center;vertical-align:middle;"></tbody>
+		</table>
+	</body>
+	<!--<div class="common-row">-->
+		<!--<div class="cell-right"><span class="switch-off" id="bluetooth"></span></div>-->
+	<!--</div>-->
+	
+<script type="text/javascript">
+	
+	
+</script>
 </html>

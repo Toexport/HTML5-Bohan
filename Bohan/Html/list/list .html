@@ -21,7 +21,7 @@
 				<h1>伯瀚智能</h1>
 				<ul>
 					<li>
-						<a>伯瀚智能用电平台</a>
+						<a>伯翰智能用电平台</a>
 					</li>
 				</ul>
 				<h2>
@@ -29,17 +29,21 @@
 			    	  <li><a class="active" >设备列表</a></li>
 				  <li><a href="../management/management.html">设备管理</a></li>
 				  <li><a href="../HistoricalData/HistoricalData.html#_top">所有用电</a></li>
-				  <li><a href="../My/My.html">个人中心</a></li>
+				  <!--<li><a href="../My/My.html">个人中心</a></li>-->
 			    </ul>
 			    </h2>
 			</section>
 		</nav>
 		<header id="header">
 		</header>
-		<table width="1236" border="5" cellspacing="0" width="50" height="80">
+		<table width="90%" border="5" cellspacing="0" width="50" height="80" style="margin:0 auto;">
 			<thead id="header">
 				<div>
-					<tbody id="Hear" style="color: red;"></tbody>
+					<tbody id="onlineEquipment" style="color: red;"></tbody> <!--在线设备--> 
+					<tbody id="totalPower" style="color: red;"></tbody> <!--总功率--> 
+					<tbody id="day" style="color: red;"></tbody> <!--当天用电--> 
+					<tbody id="month" style="color: red;"></tbody> <!--当月用电--> 
+					<tbody id="year" style="color: red;"></tbody> <!--当年用电--> 
 				</div>
 				<tr id="section">
 					<th>设备名称</th>
@@ -65,24 +69,79 @@
         var year = d.getFullYear();
         var month = (d.getMonth()+1).toString().padStart(2,'0');
         var day = d.getDate().toString().padStart(2,'0');
+        // 当前使用设备
+        var len = USERNAME.length; 
+	    Head = '3A'; // 头
+		Instruction = '1001'; // 指令
+        var All = Head+Instruction+"00"+len+USERNAME+Tail;// 數據拼接
+        var Arr = [];
+        
+        ws = CreateWS(All);
+		ws.onmessage = function(evt) {
+		 	var received_msg = evt.data;
+		 	var obj = JSON.parse(received_msg);// 数据转换JSON
+		 	Str = obj.content;
+		 	Arr = Str.split(',');
+		 	var totalPower = 0.00;
+		 	var totalUsingDeviceCount = 0;
+		 	var tempSinglePower = 0.00;
+		 	for(var j = 0; j < Arr.length-1; j++){
+		 		tempSinglePower = parseFloat( Arr[j].substring(28, 32)+ '.' + Arr[j].substring(32, 34));
+		 		totalPower = totalPower +  tempSinglePower;// 功率
+		 		if (tempSinglePower > 0)
+		 			 totalUsingDeviceCount = totalUsingDeviceCount + 1;	
+	         }
+		 	var OnlineEquipment = document.getElementById('onlineEquipment'); 
+		 	OnlineEquipment.innerHTML = '当前 ' + totalUsingDeviceCount.toString() +' 个设备使用中';
+		 	
+         	var TotalPower = document.getElementById('totalPower'); 
+		 	TotalPower.innerHTML = '当前总功率: ' + totalPower.toFixed(2)+' W';
+		 }
+		 
+		//年数据
+		var paramNames = ['strYear'];
+		var paramValues = [year];
+        var YearPowerData = RequestByToken(USERTOKEN, "GetUserYearTotalPowerData", paramNames, paramValues);
+	    var YearTotalPowerData = 0.00;
+        for (var i = 0; i < YearPowerData.length-1; i++) {
+        		var YearData = YearPowerData[i];
+        		if (YearData.powerData != '')
+        		YearTotalPowerData = YearTotalPowerData + parseFloat(YearData.powerData);
+		}	
+		var Year = document.getElementById('year'); 
+		Year.innerHTML = '当年总用电: ' + YearTotalPowerData.toFixed(2)+' kWh';
+        
+        // 月数据
+        var HHMM = year+month;
+        var paramNames = ['strYearMonth'];
+		var paramValues = [HHMM];
+		var MonthPowerData = RequestByToken(USERTOKEN, "GetUserMonthTotalPowerData", paramNames, paramValues);
+        var MonthTotalPowerData = 0.00;
+        for (i = 0; i < MonthPowerData.length-1; i ++) {
+        		var MonthData = MonthPowerData[i];
+        		if (MonthData.powerData != '')
+        			MonthTotalPowerData = MonthTotalPowerData + parseFloat(MonthData.powerData);
+		}
+		var Month = document.getElementById('month'); 
+		Month.innerHTML = '当月总用电: ' + MonthTotalPowerData.toFixed(2)+' kWh';
+        
+        // 日数据
 		var YYMMDD = year+month+day;
 		var paramNames = ['strYearMonthDay'];
 		var paramValues = [YYMMDD];
-		var DayTotalPowerData = RequestByToken(USERTOKEN, "GetUserDayTotalPowerData", paramNames, paramValues);
-		console.log(DayTotalPowerData);
-	    var totalPowerData = 0.00;
-		for (var i = 0; i < DayTotalPowerData.length; i++) {
-			var All = DayTotalPowerData[i];
-			totalPowerData = totalPowerData + parseFloat(DayTotalPowerData[i].powerData);
-			console.log(totalPowerData);
-			var AllPower = document.getElementById('Hear'); 
-			AllPower.innerHTML = '当天所有用电: ' + totalPowerData.toFixed(2)+' kWh';
+		var DayPowerData = RequestByToken(USERTOKEN, "GetUserDayTotalPowerData", paramNames, paramValues);
+	    var DayTotalPowerData = 0.00;
+		for (var i = 0; i < DayPowerData.length-1; i++) {
+			var DayData = DayPowerData[i];
+			if (DayData.powerData != '')
+				DayTotalPowerData = DayTotalPowerData + parseFloat(DayData.powerData);
 		}
-		
+		var Day = document.getElementById('day'); 
+		Day.innerHTML = '当日总用电: ' + DayTotalPowerData.toFixed(2)+' kWh';
+			 
 		var paramNames = [];
 		var paramValues = [];
 		var deviceNameList = RequestByToken(USERTOKEN, "GetLoadNameList", paramNames, paramValues);
-		
 		window.onload = function() {
 		   var tbody = document.getElementById('sidebox');
 		   for(var i = 0; i < deviceNameList.length; i++) //遍历json数据
@@ -124,6 +183,7 @@
 		 			ws.onmessage = function(evt) {
 		 				var obj = JSON.parse(evt.data);// 数据转换JSON
 						alert(obj.message);
+						window.location.reload(); 
 					}
 		        }
 			}
@@ -136,6 +196,7 @@
 			            ws.onmessage = function(evt) {
 			 				var obj = JSON.parse(evt.data);// 数据转换JSON
 							alert(obj.message);
+							window.location.reload(); 
 						}
 				}
 		}

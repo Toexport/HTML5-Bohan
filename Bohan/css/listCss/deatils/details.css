@@ -72,7 +72,7 @@ button {
  #nav >section >h1 {
  	width: 240px;
  	height: 70px;
- 	background-image:url(../../images/banner.jpg);
+ 	background-image:url(../../../images/banner.jpg);
  	text-indent: -9999px;
  	float: left;
  }
@@ -172,3 +172,18 @@ button {
 	
 }
 
+
+/*#nav >section >ul >li >a:hover {
+	background-color: #000000;
+}*/
+/*#nav >section >h2 >ul >li >a:hover {
+	background-color: #F53994;
+}*/
+
+/*#header >section > ul >li >a:hover {
+	background-color: #000000;
+}*/
+
+/*#section >section >ul:hover {
+	background-color:wheat;
+}*/
