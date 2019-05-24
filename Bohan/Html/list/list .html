@@ -75,7 +75,6 @@
 		Instruction = '1001'; // 指令
         var All = Head+Instruction+"00"+len+USERNAME+Tail;// 數據拼接
         var Arr = [];
-        
         ws = CreateWS(All);
 		ws.onmessage = function(evt) {
 		 	var received_msg = evt.data;

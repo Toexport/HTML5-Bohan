@@ -86,13 +86,16 @@ $.ajax({
             alert("登录超时，请重新登录");
             $.removeCookie('userToken', { path: '/' }); // => true//通过传递null作为cookie的值即可
             window.location.href="../login/index.html";//指向登录的页面地址
+            return;
          }
         
 	},
 	error: function() {
 		console.log('Failed');
 	},
-	async:false // false 同步
+	async:false, // false 同步
+//	 async: true  //异步请求
+	
 });
 
 return Arr;

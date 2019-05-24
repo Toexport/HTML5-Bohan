@@ -39,6 +39,7 @@
 			    		<li><button name="btnDayData" onclick="Paint('GetUserDayTotalPowerData', ['strYearMonthDay'], ['20190516']);">日数据</button></li>
 			    		<li><button name="btnMonthData" onclick="Paint('GetUserMonthTotalPowerData', ['strYearMonth'], ['201905']);">月数据</button></li>
 			    		<li><button name="btnYearData" onclick="Paint('GetUserYearTotalPowerData', ['strYear'], ['2019']);">年数据</button></li>
+			    		<!--<li><button name="ExportData" onclick='tableToExcel()'>数据导出</button></li>-->
 				</ul>
 			</h2>
 		</section>
@@ -82,8 +83,9 @@
 	                }else if (AFunName == 'GetUserDayTotalPowerData') {
 	                		AdateS = parseInt(Electricity[i].date.slice(8,10)).toString() + ' 时';
 	                	}
-	               	
-	               	Month.push(AdateS);
+//	               	function tableToExcel(){
+	               		Month.push(AdateS);
+//	               	}
 	         }
 	   	var dom = document.getElementById("container");
 		var myChart = echarts.init(dom);
