@@ -89,7 +89,7 @@ button {
 }
 /* 导航栏按钮*/
 #nav >section >h2>ul { 
-	width: 89%;
+	width: 80%;
 	/*background-color: red;*/
 	height: 55px ;
 	line-height: 51px;
@@ -122,9 +122,9 @@ button {
 	text-align: center;
 	float: left;
 }
-
+/* 导航南按钮大小*/
 #nav >section >h2 >ul >li {
-	width: 22%;
+	width: 25%;
 	text-align: center;
 	float: left;
 }

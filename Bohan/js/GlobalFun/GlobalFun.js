@@ -11,7 +11,6 @@ function GetQueryString(name)
 }
 
 function RequestByToken(AToken,AName,AParamNames,AParamValues) {
-//	console.log('Param:'+AToken);
 var dataXML = '<?xml version="1.0" encoding="utf-8"?>'; 
 dataXML = dataXML +'<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; 
 dataXML = dataXML +'<soap:Header>' 
@@ -24,14 +23,12 @@ dataXML = dataXML +'<soap:Body>'
                   +'<'+AName+' xmlns="http://bohansever.top/">';
 if (AParamNames.length > 0) {
 	for(var i = 0; i < AParamNames.length; i++) {
-		//console.log(AParamValues[i]);
 		dataXML = dataXML + '<' + AParamNames[i] + '>' + AParamValues[i] + '</' + AParamNames[i] + '>';
 	}
 }
 dataXML = dataXML +'</'+AName+'>';
 dataXML = dataXML + '</soap:Body>'; 
 dataXML = dataXML + '</soap:Envelope>';
-//console.log(dataXML);
 var URLAddr ="http://www.bohanserver.top:8088/webservice.asmx?op=";
 var xmlhttp;
 if (window.XMLHttpRequest)
@@ -88,13 +85,12 @@ $.ajax({
             window.location.href="../login/index.html";//指向登录的页面地址
             return;
          }
-        
 	},
 	error: function() {
 		console.log('Failed');
 	},
 	async:false, // false 同步
-//	 async: true  //异步请求
+//	 async: true, //异步请求
 	
 });
 

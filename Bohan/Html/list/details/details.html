@@ -77,7 +77,6 @@
 		Instruction = '1001'; // 指令
         var All = Head+Instruction+"00"+len+USERNAME+Tail;// 數據拼接
          ws = CreateWS(All);
-//       ws = CreateWS('E768160905006400010000F10D');
          ws.onmessage = function(evt) {
 			var received_msg = evt.data;
 //			console.log(received_msg);
@@ -87,14 +86,13 @@
             console.log(Str);
             Arr = Str.split(',');
             var onLineState = '';
-//          var power = '';
-            var Voltage = '';
-            var Power = '';
-            var Current = '';
-            var PowerFactor = '';
-            var CumulativePower = '';
-            var TotalElectricityConsumption = '';
-            var Temperature = '';
+            var voltage = '';
+            var power = '';
+            var current = '';
+            var powerFactor = '';
+            var cumulativePower = '';
+            var totalElectricityConsumption = '';
+            var temperature = '';
 			for(var i = 0; i < deviceNameList.length; i++) //遍历json数据
 			{
                 var DeviceID = deviceNameList[i].id;
@@ -112,35 +110,35 @@
 
 	               if(DeviceID == SctDeviceID) {
 	               		onLineState = '在线';
-	               		Voltage = Arr[j].substring(16, 19); // 电压
-	               		Voltage = Voltage + '.' + Arr[j].substring(19, 22);
-	               		Current = parseInt(Arr[j].substring(22, 25)); // 电流
-	               		Current = Current + '.' + Arr[j].substring(25, 28);
+	               		voltage = Arr[j].substring(16, 19); // 电压
+	               		voltage = voltage + '.' + Arr[j].substring(19, 22);
+	               		current = parseInt(Arr[j].substring(22, 25)); // 电流
+	               		current = current + '.' + Arr[j].substring(25, 28);
 	               		power = parseInt(Arr[j].substring(28, 32)).toString(); // 功率
 	               		power = power + '.' + Arr[j].substring(32, 34);
-	               		PowerFactor = parseInt(Arr[j].substring(34, 35)); // 功率因数
-	               		PowerFactor = PowerFactor + '.' + Arr[j].substring(35, 38);
-	               		CumulativePower = parseInt(Arr[j].substring(40, 44)); // 累计用电
-	               		CumulativePower = CumulativePower + '.' + Arr[j].substring(44, 46);
-	               		TotalElectricityConsumption = parseInt(Arr[j].substring(56, 62)) // 用电总金额
-	               		TotalElectricityConsumption = TotalElectricityConsumption + '.' + Arr[j].substring(62, 64);
-	               		Temperature = parseInt(Arr[j].substring(102, 104)); // 设备温度
-	               		Temperature = Temperature +'.'+Arr[j].substring(104,106);	
+	               		powerFactor = parseInt(Arr[j].substring(34, 35)); // 功率因数
+	               		powerFactor = powerFactor + '.' + Arr[j].substring(35, 38);
+	               		cumulativePower = parseInt(Arr[j].substring(40, 44)); // 累计用电
+	               		cumulativePower = cumulativePower + '.' + Arr[j].substring(44, 46);
+	               		totalElectricityConsumption = parseInt(Arr[j].substring(56, 62)) // 用电总金额
+	               		totalElectricityConsumption = totalElectricityConsumption + '.' + Arr[j].substring(62, 64);
+	               		temperature = parseInt(Arr[j].substring(102, 104)); // 设备温度
+	               		temperature = temperature +'.'+Arr[j].substring(104,106);	
 						break;
 					} else {
 						onLineState = '离线';
 //						power = '0.00'+" V";
-						Voltage = '';
+						voltage = '';
 						power = '';
-						Current = '';
-						PowerFactor = '';
-						CumulativePower = '';
-						TotalElectricityConsumption = '';
-						Temperature = '';	
+						current = '';
+						powerFactor = '';
+						cumulativePower = '';
+						totalElectricityConsumption = '';
+						temperature = '';	
 					}
 				}
-				var trow = getDataRow(deviceNameList[i], onLineState, power, switchStatus, Voltage, 
-					Current, PowerFactor, CumulativePower, TotalElectricityConsumption, Temperature);//调用方法,返回tr数据
+				var trow = getDataRow(deviceNameList[i], onLineState, power, switchStatus, voltage, 
+					current, powerFactor, cumulativePower, totalElectricityConsumption, temperature);//调用方法,返回tr数据
 				tbody.appendChild(trow);
 				
 			}
